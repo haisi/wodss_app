@@ -1,0 +1,39 @@
+entity Team {
+	teamName String
+}
+
+entity Bet {
+	goalsTeam1 Integer,
+    goalsTeam2 Integer
+}
+
+entity Game{
+	time Instant
+}
+
+entity BetTeam {
+	betTeamName String
+}
+
+relationship ManyToMany {
+	User{betTeam} to BetTeam{user}
+}
+
+relationship OneToMany {
+	User{bet} to Bet{user},
+    Team to Game{team1},
+    Team to Game{team2},
+    Game to Bet{game}
+}
+
+relationship ManyToOne{
+	User{bet} to Bet{user}
+}
+
+paginate Game, Team with infinite-scroll
+paginate Bet, BetTeam with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
