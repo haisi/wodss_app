@@ -1,32 +1,33 @@
 entity Team {
-	teamName String
+    teamName String,
+    flag ImageBlob
 }
 
 entity Bet {
-	goalsTeam1 Integer,
+    goalsTeam1 Integer,
     goalsTeam2 Integer
 }
 
 entity Game{
-	time Instant
+    time ZonedDateTime
 }
 
 entity BetTeam {
-	betTeamName String
+    betTeamName String
 }
 
 relationship ManyToMany {
-	BetTeam{members} to User
+    BetTeam{members(login)} to User
 }
 
 relationship OneToMany {
-	Team to Game{team1},
-    Team to Game{team2},
     Game to Bet{game}
 }
 
 relationship ManyToOne{
-	Bet to User
+    Game{team1(teamName)} to Team,
+    Game{team2(teamName)} to Team,
+    Bet{user(login)} to User
 }
 
 paginate Game, Team with infinite-scroll

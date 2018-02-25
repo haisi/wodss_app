@@ -1,0 +1,19 @@
+Type: Monolithic
+Name: BetChampion
+Package: ch.fhnw.wodss.betchampion
+JHipster Registry: No
+Authentication: JWT
+Database: SQL
+Prod-Database: MySQL
+Dev-Database: MySQL
+Spring cache: Ehcache
+Hibernate 2n level cache: No
+Build-Tool: Gradle
+Other (Social Login, ElasticSearch, Websockets, API-First, Kafka): None
+Client Framework: Angular 5
+Sass: No
+Internationalization: Yes
+Nativ: German
+Additional: None
+Testion Frameworks (Gatling, Cucumber, Protractor): None
+Other Generators: No 
