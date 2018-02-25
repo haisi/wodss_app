@@ -16,18 +16,17 @@ entity BetTeam {
 }
 
 relationship ManyToMany {
-	User{betTeam} to BetTeam{user}
+	BetTeam{members} to User
 }
 
 relationship OneToMany {
-	User{bet} to Bet{user},
-    Team to Game{team1},
+	Team to Game{team1},
     Team to Game{team2},
     Game to Bet{game}
 }
 
 relationship ManyToOne{
-	User{bet} to Bet{user}
+	Bet to User
 }
 
 paginate Game, Team with infinite-scroll
