@@ -47,6 +47,12 @@ public class GameResourceIntTest {
     private static final ZonedDateTime DEFAULT_MATCH_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_MATCH_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
+    private static final Integer DEFAULT_GOALS_TEAM_1 = 0;
+    private static final Integer UPDATED_GOALS_TEAM_1 = 1;
+
+    private static final Integer DEFAULT_GOALS_TEAM_2 = 0;
+    private static final Integer UPDATED_GOALS_TEAM_2 = 1;
+
     @Autowired
     private GameRepository gameRepository;
 
@@ -88,7 +94,9 @@ public class GameResourceIntTest {
      */
     public static Game createEntity(EntityManager em) {
         Game game = new Game()
-            .matchTime(DEFAULT_MATCH_TIME);
+            .matchTime(DEFAULT_MATCH_TIME)
+            .goalsTeam1(DEFAULT_GOALS_TEAM_1)
+            .goalsTeam2(DEFAULT_GOALS_TEAM_2);
         return game;
     }
 
@@ -113,6 +121,8 @@ public class GameResourceIntTest {
         assertThat(gameList).hasSize(databaseSizeBeforeCreate + 1);
         Game testGame = gameList.get(gameList.size() - 1);
         assertThat(testGame.getMatchTime()).isEqualTo(DEFAULT_MATCH_TIME);
+        assertThat(testGame.getGoalsTeam1()).isEqualTo(DEFAULT_GOALS_TEAM_1);
+        assertThat(testGame.getGoalsTeam2()).isEqualTo(DEFAULT_GOALS_TEAM_2);
     }
 
     @Test
@@ -154,6 +164,42 @@ public class GameResourceIntTest {
 
     @Test
     @Transactional
+    public void checkGoalsTeam1IsRequired() throws Exception {
+        int databaseSizeBeforeTest = gameRepository.findAll().size();
+        // set the field null
+        game.setGoalsTeam1(null);
+
+        // Create the Game, which fails.
+
+        restGameMockMvc.perform(post("/api/games")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(game)))
+            .andExpect(status().isBadRequest());
+
+        List<Game> gameList = gameRepository.findAll();
+        assertThat(gameList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkGoalsTeam2IsRequired() throws Exception {
+        int databaseSizeBeforeTest = gameRepository.findAll().size();
+        // set the field null
+        game.setGoalsTeam2(null);
+
+        // Create the Game, which fails.
+
+        restGameMockMvc.perform(post("/api/games")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(game)))
+            .andExpect(status().isBadRequest());
+
+        List<Game> gameList = gameRepository.findAll();
+        assertThat(gameList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllGames() throws Exception {
         // Initialize the database
         gameRepository.saveAndFlush(game);
@@ -163,7 +209,9 @@ public class GameResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(game.getId().intValue())))
-            .andExpect(jsonPath("$.[*].matchTime").value(hasItem(sameInstant(DEFAULT_MATCH_TIME))));
+            .andExpect(jsonPath("$.[*].matchTime").value(hasItem(sameInstant(DEFAULT_MATCH_TIME))))
+            .andExpect(jsonPath("$.[*].goalsTeam1").value(hasItem(DEFAULT_GOALS_TEAM_1)))
+            .andExpect(jsonPath("$.[*].goalsTeam2").value(hasItem(DEFAULT_GOALS_TEAM_2)));
     }
 
     @Test
@@ -177,7 +225,9 @@ public class GameResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(game.getId().intValue()))
-            .andExpect(jsonPath("$.matchTime").value(sameInstant(DEFAULT_MATCH_TIME)));
+            .andExpect(jsonPath("$.matchTime").value(sameInstant(DEFAULT_MATCH_TIME)))
+            .andExpect(jsonPath("$.goalsTeam1").value(DEFAULT_GOALS_TEAM_1))
+            .andExpect(jsonPath("$.goalsTeam2").value(DEFAULT_GOALS_TEAM_2));
     }
 
     @Test
@@ -201,7 +251,9 @@ public class GameResourceIntTest {
         // Disconnect from session so that the updates on updatedGame are not directly saved in db
         em.detach(updatedGame);
         updatedGame
-            .matchTime(UPDATED_MATCH_TIME);
+            .matchTime(UPDATED_MATCH_TIME)
+            .goalsTeam1(UPDATED_GOALS_TEAM_1)
+            .goalsTeam2(UPDATED_GOALS_TEAM_2);
 
         restGameMockMvc.perform(put("/api/games")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -213,6 +265,8 @@ public class GameResourceIntTest {
         assertThat(gameList).hasSize(databaseSizeBeforeUpdate);
         Game testGame = gameList.get(gameList.size() - 1);
         assertThat(testGame.getMatchTime()).isEqualTo(UPDATED_MATCH_TIME);
+        assertThat(testGame.getGoalsTeam1()).isEqualTo(UPDATED_GOALS_TEAM_1);
+        assertThat(testGame.getGoalsTeam2()).isEqualTo(UPDATED_GOALS_TEAM_2);
     }
 
     @Test

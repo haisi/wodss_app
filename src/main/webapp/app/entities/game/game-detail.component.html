@@ -8,6 +8,14 @@
         <dd>
             <span>{{game.matchTime | date:'medium'}}</span>
         </dd>
+        <dt><span jhiTranslate="betChampionApp.game.goalsTeam1">Goals Team 1</span></dt>
+        <dd>
+            <span>{{game.goalsTeam1}}</span>
+        </dd>
+        <dt><span jhiTranslate="betChampionApp.game.goalsTeam2">Goals Team 2</span></dt>
+        <dd>
+            <span>{{game.goalsTeam2}}</span>
+        </dd>
         <dt><span jhiTranslate="betChampionApp.game.team1">Team 1</span></dt>
         <dd>
             <div *ngIf="game.team1">

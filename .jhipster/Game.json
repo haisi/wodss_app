@@ -21,12 +21,34 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "goalsTeam1",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required",
+                "min",
+                "max"
+            ],
+            "fieldValidateRulesMin": "0",
+            "fieldValidateRulesMax": "99"
+        },
+        {
+            "fieldName": "goalsTeam2",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required",
+                "min",
+                "max"
+            ],
+            "fieldValidateRulesMin": "0",
+            "fieldValidateRulesMax": "99"
         }
     ],
     "changelogDate": "20180226111028",
-    "entityTableName": "game",
     "dto": "no",
-    "pagination": "pagination",
     "service": "serviceClass",
-    "jpaMetamodelFiltering": false
+    "entityTableName": "game",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
 }

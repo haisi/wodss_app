@@ -25,6 +25,18 @@ public class Game implements Serializable {
     @Column(name = "match_time", nullable = false)
     private ZonedDateTime matchTime;
 
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 99)
+    @Column(name = "goals_team_1", nullable = false)
+    private Integer goalsTeam1;
+
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 99)
+    @Column(name = "goals_team_2", nullable = false)
+    private Integer goalsTeam2;
+
     @ManyToOne
     private Team team1;
 
@@ -51,6 +63,32 @@ public class Game implements Serializable {
 
     public void setMatchTime(ZonedDateTime matchTime) {
         this.matchTime = matchTime;
+    }
+
+    public Integer getGoalsTeam1() {
+        return goalsTeam1;
+    }
+
+    public Game goalsTeam1(Integer goalsTeam1) {
+        this.goalsTeam1 = goalsTeam1;
+        return this;
+    }
+
+    public void setGoalsTeam1(Integer goalsTeam1) {
+        this.goalsTeam1 = goalsTeam1;
+    }
+
+    public Integer getGoalsTeam2() {
+        return goalsTeam2;
+    }
+
+    public Game goalsTeam2(Integer goalsTeam2) {
+        this.goalsTeam2 = goalsTeam2;
+        return this;
+    }
+
+    public void setGoalsTeam2(Integer goalsTeam2) {
+        this.goalsTeam2 = goalsTeam2;
     }
 
     public Team getTeam1() {
@@ -105,6 +143,8 @@ public class Game implements Serializable {
         return "Game{" +
             "id=" + getId() +
             ", matchTime='" + getMatchTime() + "'" +
+            ", goalsTeam1=" + getGoalsTeam1() +
+            ", goalsTeam2=" + getGoalsTeam2() +
             "}";
     }
 }
