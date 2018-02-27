@@ -18,6 +18,8 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="matchTime"><span jhiTranslate="betChampionApp.game.matchTime">Match Time</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="goalsTeam1"><span jhiTranslate="betChampionApp.game.goalsTeam1">Goals Team 1</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="goalsTeam2"><span jhiTranslate="betChampionApp.game.goalsTeam2">Goals Team 2</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="team1.teamName"><span jhiTranslate="betChampionApp.game.team1">Team 1</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="team2.teamName"><span jhiTranslate="betChampionApp.game.team2">Team 2</span> <span class="fa fa-sort"></span></th>
             <th></th>
@@ -27,6 +29,8 @@
             <tr *ngFor="let game of games ;trackBy: trackId">
                 <td><a [routerLink]="['../game', game.id ]">{{game.id}}</a></td>
                 <td>{{game.matchTime | date:'medium'}}</td>
+                <td>{{game.goalsTeam1}}</td>
+                <td>{{game.goalsTeam2}}</td>
                 <td>
                     <div *ngIf="game.team1">
                         <a [routerLink]="['../team', game.team1?.id ]" >{{game.team1?.teamName}}</a>

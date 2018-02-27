@@ -26,6 +26,14 @@
                 <constraints nullable="false" />
             </column>
 
+            <column name="goals_team_1" type="integer">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="goals_team_2" type="integer">
+                <constraints nullable="false" />
+            </column>
+
             <column name="team1_id" type="bigint">
                 <constraints nullable="true" />
             </column>
