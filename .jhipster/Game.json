@@ -1,0 +1,32 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "team1",
+            "otherEntityName": "team",
+            "otherEntityField": "teamName"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "team2",
+            "otherEntityName": "team",
+            "otherEntityField": "teamName"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "matchTime",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20180226111028",
+    "entityTableName": "game",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false
+}

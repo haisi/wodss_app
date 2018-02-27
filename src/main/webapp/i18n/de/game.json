@@ -1,0 +1,24 @@
+
+{
+    "betChampionApp": {
+        "game" : {
+            "home": {
+                "title": "Games",
+                "createLabel": "Game erstellen",
+                "createOrEditLabel": "Game erstellen oder bearbeiten"
+            },
+            "created": "Game erstellt mit ID {{ param }}",
+            "updated": "Game aktualisiert mit ID {{ param }}",
+            "deleted": "Game gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Game {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Game"
+            },
+            "matchTime": "Match Time",
+            "team1": "Team 1",
+            "team2": "Team 2"
+        }
+    }
+}

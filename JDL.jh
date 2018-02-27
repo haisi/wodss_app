@@ -1,39 +1,32 @@
 entity Team {
-    teamName String,
-    flag ImageBlob
+    teamName String required minlength(1) maxlength(80)
 }
 
 entity Bet {
-    goalsTeam1 Integer,
-    goalsTeam2 Integer
+    goalsTeam1 Integer required min(0) max(99),
+    goalsTeam2 Integer required min(0) max(99)
 }
 
 entity Game{
-    time ZonedDateTime
+    matchTime ZonedDateTime required
 }
 
 entity BetTeam {
-    betTeamName String
+    betTeamName String required
 }
 
 relationship ManyToMany {
     BetTeam{members(login)} to User
 }
 
-relationship OneToMany {
-    Game to Bet{game}
-}
-
 relationship ManyToOne{
     Game{team1(teamName)} to Team,
     Game{team2(teamName)} to Team,
-    Bet{user(login)} to User
+    Bet{user(login)} to User,
+    Bet{game} to Game
 }
 
-paginate Game, Team with infinite-scroll
-paginate Bet, BetTeam with pagination
-
-dto * with mapstruct
+paginate Bet, BetTeam, Game, Team with pagination
 
 // Set service options to all except few
-service all with serviceImpl
+service all with serviceClass

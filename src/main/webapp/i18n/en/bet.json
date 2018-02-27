@@ -1,0 +1,25 @@
+
+{
+    "betChampionApp": {
+        "bet" : {
+            "home": {
+                "title": "Bets",
+                "createLabel": "Create a new Bet",
+                "createOrEditLabel": "Create or edit a Bet"
+            },
+            "created": "A new Bet is created with identifier {{ param }}",
+            "updated": "A Bet is updated with identifier {{ param }}",
+            "deleted": "A Bet is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Bet {{ id }}?"
+            },
+            "detail": {
+                "title": "Bet"
+            },
+            "goalsTeam1": "Goals Team 1",
+            "goalsTeam2": "Goals Team 2",
+            "user": "User",
+            "game": "Game"
+        }
+    }
+}
