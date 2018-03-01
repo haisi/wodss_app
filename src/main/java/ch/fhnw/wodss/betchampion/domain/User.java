@@ -8,9 +8,7 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Locale;
@@ -81,6 +79,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Column(name = "reset_date")
     private Instant resetDate = null;
+
+    @Column(name = "points")
+    private Integer points;
 
     @JsonIgnore
     @ManyToMany
@@ -188,6 +189,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public void setLangKey(String langKey) {
         this.langKey = langKey;
     }
+
+    public Integer getPoints(){return points}
+    public void setPoints(Integer points){this.points = points}
 
     public Set<Authority> getAuthorities() {
         return authorities;
