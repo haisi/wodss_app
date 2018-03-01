@@ -18,8 +18,6 @@
                     </span>
                 </a>
             </li>
-
-
             <li class="nav-item" routerLinkActive="game" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" routerLink="game" (click)="collapseNavbar()">
                     <span>
@@ -29,44 +27,35 @@
                 </a>
             </li>
 
-            <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
+            <li class="nav-item" routerLinkActive="team" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="team" (click)="collapseNavbar()">
                     <span>
-                        <i class="fa fa-th-list" aria-hidden="true"></i>
-                        <span jhiTranslate="global.menu.entities.main">
-                            Entities
-                        </span>
+                        <i class="fa fa-bus" aria-hidden="true"></i>
+                        <span jhiTranslate="global.menu.entities.team">Teams</span>
                     </span>
                 </a>
-                <ul class="dropdown-menu" ngbDropdownMenu>
-                    <li>
-                        <a class="dropdown-item" routerLink="team" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span jhiTranslate="global.menu.entities.team">Team</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="bet" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span jhiTranslate="global.menu.entities.bet">Bet</span>
-                        </a>
-                    </li>
-               <!--     <li>
-                        <a class="dropdown-item" routerLink="game" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span jhiTranslate="global.menu.entities.game">Game</span>
-                        </a>
-                    </li> -->
-                    <li>
-                        <a class="dropdown-item" routerLink="bet-team" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span jhiTranslate="global.menu.entities.betTeam">Bet Team</span>
-                        </a>
-                    </li>
-                    <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
-                </ul>
             </li>
+
+
+            <li class="nav-item" routerLinkActive="bet" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="bet" (click)="collapseNavbar()">
+                    <span>
+                        <i class="fa fa-flask" aria-hidden="true"></i>
+                        <span jhiTranslate="global.menu.entities.bet">Tipps</span>
+                    </span>
+                </a>
+            </li>
+
+            <li class="nav-item" routerLinkActive="bet-team" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="bet-team" (click)="collapseNavbar()">
+                    <span>
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                        <span jhiTranslate="global.menu.entities.betTeam">Tipp-Gruppen</span>
+                    </span>
+                </a>
+            </li>
+
+
             <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
                     <span>
