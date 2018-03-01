@@ -27,7 +27,7 @@ public class PointUpdateService {
         this.betRepository = betRepository;
     }
 
-    @Scheduled(cron = "* */10 * * * *")
+    @Scheduled(cron = "0 */10 * * * *")
     public void updatePoints(){
         log.debug("Start to calculate points");
         List<User> users = userRepository.findAll();
