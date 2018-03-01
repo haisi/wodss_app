@@ -190,8 +190,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.langKey = langKey;
     }
 
-    public Integer getPoints(){return points}
-    public void setPoints(Integer points){this.points = points}
+    public Integer getPoints(){return points;}
+    public void setPoints(Integer points){this.points = points;}
 
     public Set<Authority> getAuthorities() {
         return authorities;
