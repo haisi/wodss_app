@@ -2,6 +2,8 @@ package ch.fhnw.wodss.betchampion.repository;
 
 import ch.fhnw.wodss.betchampion.domain.Bet;
 import ch.fhnw.wodss.betchampion.domain.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
@@ -15,7 +17,7 @@ import java.util.List;
 public interface BetRepository extends JpaRepository<Bet, Long> {
 
     @Query("select bet from Bet bet where bet.user.login = ?#{principal.username}")
-    List<Bet> findByUserIsCurrentUser();
+    Page<Bet> findByUserIsCurrentUser(Pageable pageable);
 
     List<Bet> findAllByUser(User user);
 }

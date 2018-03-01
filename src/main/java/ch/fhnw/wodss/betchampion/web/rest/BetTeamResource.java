@@ -1,5 +1,9 @@
 package ch.fhnw.wodss.betchampion.web.rest;
 
+import ch.fhnw.wodss.betchampion.domain.Team;
+import ch.fhnw.wodss.betchampion.domain.User;
+import ch.fhnw.wodss.betchampion.repository.UserRepository;
+import ch.fhnw.wodss.betchampion.security.SecurityUtils;
 import com.codahale.metrics.annotation.Timed;
 import ch.fhnw.wodss.betchampion.domain.BetTeam;
 import ch.fhnw.wodss.betchampion.service.BetTeamService;
@@ -36,8 +40,11 @@ public class BetTeamResource {
 
     private final BetTeamService betTeamService;
 
-    public BetTeamResource(BetTeamService betTeamService) {
+    private final UserRepository userRepository;
+
+    public BetTeamResource(BetTeamService betTeamService, UserRepository userRepository) {
         this.betTeamService = betTeamService;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -123,5 +130,48 @@ public class BetTeamResource {
         log.debug("REST request to delete BetTeam : {}", id);
         betTeamService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+
+    /**
+     * PUT /bet-teams/:id/join : logged in user joins the "id" betTeam
+     *
+     * @param id the id of the betTeam to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @PutMapping("bet-teams/{id}/join")
+    @Timed
+    public ResponseEntity<Void> joinTeam(@PathVariable Long id){
+        log.debug("Add :"+SecurityUtils.getCurrentUserLogin().get()+" to bet team "+id);
+        Optional<User> optionalUser = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+        if(optionalUser.isPresent()){
+            User user = optionalUser.get();
+            BetTeam team =  betTeamService.findOne(id);
+            team.addMembers(user);
+            betTeamService.save(team);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    /**
+     * PUT /bet-teams/:id/leave : logged in user leaves the "id" betTeam
+     *
+     * @param id the id of the betTeam to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @PutMapping("bet-teams/{id}/leave")
+    @Timed
+    public ResponseEntity<Void> leaveTeam(@PathVariable Long id){
+        log.debug("Remove :"+SecurityUtils.getCurrentUserLogin().get()+" from bet team "+id);
+        Optional<User> optionalUser = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+        if(optionalUser.isPresent()){
+            User user = optionalUser.get();
+            BetTeam team =  betTeamService.findOne(id);
+            team.removeMembers(user);
+            betTeamService.save(team);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
