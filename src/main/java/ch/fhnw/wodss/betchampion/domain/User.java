@@ -191,6 +191,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     }
 
     public Integer getPoints(){return points;}
+
     public void setPoints(Integer points){this.points = points;}
 
     public Set<Authority> getAuthorities() {
