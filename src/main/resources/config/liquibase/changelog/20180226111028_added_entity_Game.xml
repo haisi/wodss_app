@@ -27,11 +27,11 @@
             </column>
 
             <column name="goals_team_1" type="integer">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="goals_team_2" type="integer">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="team1_id" type="bigint">
@@ -45,7 +45,7 @@
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="game" columnName="match_time" columnDataType="datetime"/>
-        
+
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

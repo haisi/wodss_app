@@ -25,13 +25,11 @@ public class Game implements Serializable {
     @Column(name = "match_time", nullable = false)
     private ZonedDateTime matchTime;
 
-    @NotNull
     @Min(value = 0)
     @Max(value = 99)
     @Column(name = "goals_team_1", nullable = false)
     private Integer goalsTeam1;
 
-    @NotNull
     @Min(value = 0)
     @Max(value = 99)
     @Column(name = "goals_team_2", nullable = false)
