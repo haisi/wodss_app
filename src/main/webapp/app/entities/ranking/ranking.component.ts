@@ -76,7 +76,7 @@ export class RankingComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        this.userService.query({
+        this.userService.queryRank({
             page: this.page - 1,
             size: this.itemsPerPage,
             sort: this.sort()}).subscribe(

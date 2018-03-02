@@ -1,6 +1,7 @@
 package ch.fhnw.wodss.betchampion.web.rest;
 
 import ch.fhnw.wodss.betchampion.config.Constants;
+import ch.fhnw.wodss.betchampion.service.dto.UserRankingDTO;
 import com.codahale.metrics.annotation.Timed;
 import ch.fhnw.wodss.betchampion.domain.User;
 import ch.fhnw.wodss.betchampion.repository.UserRepository;
@@ -18,6 +19,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing users.
@@ -147,6 +150,21 @@ public class UserResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
+
+    /**
+     * GET /users : get all users.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and with body all users
+     */
+    @GetMapping("/usersRanking")
+    @Timed
+    public ResponseEntity<List<UserRankingDTO>> getAllUserRank(Pageable pageable) {
+        final Page<UserDTO> userPage = userService.getAllManagedUsers(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(userPage, "/api/usersRanking");
+        return new ResponseEntity<>(userPage.getContent().stream().map(UserDTO::toRank).collect(Collectors.toList()), headers, HttpStatus.OK);
+    }
+
 
     /**
      * @return a string list of the all of the roles

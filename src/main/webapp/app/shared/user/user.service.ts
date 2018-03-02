@@ -29,6 +29,11 @@ export class UserService {
         return this.http.get<User[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
+    queryRank(req?: any): Observable<HttpResponse<User[]>> {
+        const options = createRequestOption(req);
+        return this.http.get<User[]>(this.resourceUrl+"Ranking", { params: options, observe: 'response' });
+    }
+
     delete(login: string): Observable<HttpResponse<any>> {
         return this.http.delete(`${this.resourceUrl}/${login}`, { observe: 'response' });
     }
