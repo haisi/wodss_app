@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" style="visibility: hidden">
             <label jhiTranslate="betChampionApp.betTeam.members" for="field_members">Members</label>
             <select class="form-control" id="field_members" multiple name="members" [(ngModel)]="betTeam.members">
                 <option [ngValue]="getSelected(betTeam.members, userOption)" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>

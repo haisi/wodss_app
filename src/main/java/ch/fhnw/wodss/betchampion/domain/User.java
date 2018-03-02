@@ -202,6 +202,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.authorities = authorities;
     }
 
+    public Rank toRank(){
+        return new Rank(this.points,this.login);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

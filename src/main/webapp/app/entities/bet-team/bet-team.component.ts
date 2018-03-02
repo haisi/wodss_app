@@ -108,6 +108,33 @@ currentAccount: any;
         return result;
     }
 
+    /**
+     * Checks whether the logged in user is a member of the passed betTeam
+     *
+     * @param {BetTeam} betTeam
+     * @returns {boolean} true if user is member of the betTeam
+     */
+    isMember(betTeam: BetTeam) {
+        for (const member of betTeam.members) {
+            if (member.id === this.currentAccount.id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    join(betTeamId: number) {
+        // TODO: fix error handling
+        this.betTeamService.join(betTeamId)
+            .subscribe((res: HttpResponse<BetTeam>) => this.clear(), (res: HttpErrorResponse) => console.log('Failed to join'));
+    }
+
+    leave(betTeamId: number) {
+        // TODO: fix error handling
+        this.betTeamService.leave(betTeamId)
+            .subscribe((res: HttpResponse<BetTeam>) => this.clear(), (res: HttpErrorResponse) => console.log('Failed to leave'));
+    }
+
     private onSuccess(data, headers) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
