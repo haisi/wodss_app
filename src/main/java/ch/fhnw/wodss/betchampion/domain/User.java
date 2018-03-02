@@ -2,6 +2,7 @@ package ch.fhnw.wodss.betchampion.domain;
 
 import ch.fhnw.wodss.betchampion.config.Constants;
 
+import ch.fhnw.wodss.betchampion.service.dto.UserRankingDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
@@ -202,8 +203,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.authorities = authorities;
     }
 
-    public Rank toRank(){
-        return new Rank(this.points,this.login);
+    public UserRankingDTO toRank(){
+        UserRankingDTO urDTO = new UserRankingDTO();
+        urDTO.setPoints(this.points);
+        urDTO.setLogin(this.login);
+        return  urDTO;
     }
 
     @Override
