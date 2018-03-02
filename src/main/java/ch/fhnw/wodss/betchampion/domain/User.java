@@ -203,12 +203,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.authorities = authorities;
     }
 
-    public UserRankingDTO toRank(){
-        UserRankingDTO urDTO = new UserRankingDTO();
-        urDTO.setPoints(this.points);
-        urDTO.setLogin(this.login);
-        return  urDTO;
-    }
 
     @Override
     public boolean equals(Object o) {

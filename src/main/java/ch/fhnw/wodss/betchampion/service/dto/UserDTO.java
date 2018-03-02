@@ -190,6 +190,13 @@ public class UserDTO {
         this.points = points;
     }
 
+    public UserRankingDTO toRank(){
+        UserRankingDTO urDTO = new UserRankingDTO();
+        urDTO.setPoints(this.points);
+        urDTO.setLogin(this.login);
+        return  urDTO;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
