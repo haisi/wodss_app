@@ -42,6 +42,14 @@ export class BetTeamService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
 
+    leave(id: number): Observable<HttpResponse<any>> {
+        return this.http.put<any>(`${this.resourceUrl}/${id}/leave`, { observe: 'response'});
+    }
+
+    join(id: number): Observable<HttpResponse<any>> {
+        return this.http.put<any>(`${this.resourceUrl}/${id}/join`, { observe: 'response'});
+    }
+
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: BetTeam = this.convertItemFromServer(res.body);
         return res.clone({body});

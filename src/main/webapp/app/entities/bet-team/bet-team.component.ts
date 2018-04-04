@@ -123,6 +123,18 @@ currentAccount: any;
         return false;
     }
 
+    join(betTeamId: number) {
+        // TODO: fix error handling
+        this.betTeamService.join(betTeamId)
+            .subscribe((res: HttpResponse<BetTeam>) => this.clear(), (res: HttpErrorResponse) => console.log("Failed to join"));
+    }
+
+    leave(betTeamId: number) {
+        // TODO: fix error handling
+        this.betTeamService.leave(betTeamId)
+            .subscribe((res: HttpResponse<BetTeam>) => this.clear(), (res: HttpErrorResponse) => console.log("Failed to leave"));
+    }
+
     private onSuccess(data, headers) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');

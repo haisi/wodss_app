@@ -37,11 +37,9 @@
                         <!-- IF: If user is already a member of the BetTeam show the "Leave" button -->
                         <button type="submit"
                                 *ngIf="isMember(betTeam); else elseBlock"
-                                [routerLink]="['/', { outlets: { popup: 'bet-team/'+ betTeam.id + '/edit'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
+                                (click)="leave(betTeam.id)"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-minus"></span>
                             <span class="d-none d-md-inline"
                                   jhiTranslate="betChampionApp.betTeam.leave">Leave</span>
                         </button>
@@ -49,11 +47,9 @@
                         <!-- ELSE: show "Join" button -->
                         <ng-template #elseBlock>
                             <button type="submit"
-                                    [routerLink]="['/', { outlets: { popup: 'bet-team/'+ betTeam.id + '/edit'} }]"
-                                    replaceUrl="true"
-                                    queryParamsHandling="merge"
+                                    (click)="join(betTeam.id)"
                                     class="btn btn-primary btn-sm">
-                                <span class="fa fa-pencil"></span>
+                                <span class="fa fa-plus"></span>
                                 <span class="d-none d-md-inline" jhiTranslate="betChampionApp.betTeam.join">Join</span>
                             </button>
                         </ng-template>
