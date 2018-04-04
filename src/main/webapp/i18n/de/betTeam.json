@@ -13,6 +13,8 @@
             "delete": {
                 "question": "Soll Bet Team {{ id }} wirklich dauerhaft gelöscht werden?"
             },
+            "leave": "Austreten",
+            "join": "Beitreten",
             "detail": {
                 "title": "Bet Team"
             },

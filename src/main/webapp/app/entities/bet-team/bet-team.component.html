@@ -33,22 +33,47 @@
                             <span class="fa fa-eye"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                         </button>
+
+                        <!-- IF: If user is already a member of the BetTeam show the "Leave" button -->
                         <button type="submit"
+                                *ngIf="isMember(betTeam); else elseBlock"
                                 [routerLink]="['/', { outlets: { popup: 'bet-team/'+ betTeam.id + '/edit'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-primary btn-sm">
                             <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            <span class="d-none d-md-inline"
+                                  jhiTranslate="betChampionApp.betTeam.leave">Leave</span>
                         </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'bet-team/'+ betTeam.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
+
+                        <!-- ELSE: show "Join" button -->
+                        <ng-template #elseBlock>
+                            <button type="submit"
+                                    [routerLink]="['/', { outlets: { popup: 'bet-team/'+ betTeam.id + '/edit'} }]"
+                                    replaceUrl="true"
+                                    queryParamsHandling="merge"
+                                    class="btn btn-primary btn-sm">
+                                <span class="fa fa-pencil"></span>
+                                <span class="d-none d-md-inline" jhiTranslate="betChampionApp.betTeam.join">Join</span>
+                            </button>
+                        </ng-template>
+
+                        <!--<button type="submit"-->
+                                <!--[routerLink]="['/', { outlets: { popup: 'bet-team/'+ betTeam.id + '/edit'} }]"-->
+                                <!--replaceUrl="true"-->
+                                <!--queryParamsHandling="merge"-->
+                                <!--class="btn btn-primary btn-sm">-->
+                            <!--<span class="fa fa-pencil"></span>-->
+                            <!--<span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>-->
+                        <!--</button>-->
+                        <!--<button type="submit"-->
+                                <!--[routerLink]="['/', { outlets: { popup: 'bet-team/'+ betTeam.id + '/delete'} }]"-->
+                                <!--replaceUrl="true"-->
+                                <!--queryParamsHandling="merge"-->
+                                <!--class="btn btn-danger btn-sm">-->
+                            <!--<span class="fa fa-remove"></span>-->
+                            <!--<span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>-->
+                        <!--</button>-->
                     </div>
                 </td>
             </tr>
