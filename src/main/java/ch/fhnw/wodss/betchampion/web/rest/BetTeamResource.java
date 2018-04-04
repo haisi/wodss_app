@@ -102,7 +102,7 @@ public class BetTeamResource {
     @Timed
     public ResponseEntity<List<BetTeam>> getAllBetTeams(Pageable pageable) {
         log.debug("REST request to get a page of BetTeams");
-        Page<BetTeam> page = betTeamService.findAll(pageable);
+        Page<BetTeam> page = betTeamService.findAllEager(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/bet-teams");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

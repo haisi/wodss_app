@@ -48,6 +48,12 @@ public class BetTeamService {
         return betTeamRepository.findAll(pageable);
     }
 
+    @Transactional(readOnly = true)
+    public Page<BetTeam> findAllEager(Pageable pageable) {
+        log.debug("Request to get all BetTeams with all it's members");
+        return betTeamRepository.findAllWithEagerRelationships(pageable);
+    }
+
     /**
      * Get one betTeam by id.
      *
