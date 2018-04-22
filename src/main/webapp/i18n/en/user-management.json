@@ -27,6 +27,7 @@
         "lastModifiedBy": "Modified by",
         "lastModifiedDate": "Modified date",
         "points": "Points",
-        "ranking": "Ranking"
+        "ranking": "Ranking",
+        "rank": "Rank"
     }
 }

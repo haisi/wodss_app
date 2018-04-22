@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,8 +22,8 @@ public class UserRankingDTO implements Comparable<UserRankingDTO> {
     @Size(min = 1, max = 50)
     private String login;
 
-
     private Integer points;
+    private Integer rank;
 
     public UserRankingDTO() {
         // Empty constructor needed for Jackson.
@@ -31,6 +32,52 @@ public class UserRankingDTO implements Comparable<UserRankingDTO> {
     public UserRankingDTO(User user) {
         this.login = user.getLogin();
         this.points = user.getPoints();
+    }
+
+    /**
+     * <pre>
+     *     Rank : Score : Login
+     *     1 : 9 : Hans
+     *     1 : 9 : Hans1
+     *     3 : 6 : Urs
+     *     3 : 6 : Urs2
+     *     5 : 2 : Skrrt
+     *     6 : 0 : Looser
+     * </pre>
+     *
+     *
+     * @param rankings
+     * @return
+     */
+    static List<UserRankingDTO> addRanking(List<UserRankingDTO> rankings) {
+
+        if (rankings.isEmpty()) {
+            return rankings;
+        } else if (rankings.size() == 1) {
+            rankings.get(0).rank = 1;
+            return rankings;
+        }
+
+        rankings.sort(UserRankingDTO::compareTo);
+
+        int currentRank = 1;
+        int prevPoints = rankings.get(0).points;
+
+        for (int i = 0; i < rankings.size(); i++) {
+            UserRankingDTO dto = rankings.get(i);
+            Integer currentPoints = dto.points;
+
+            if (currentPoints == prevPoints) {
+                dto.rank = currentRank;
+            } else {
+                currentRank = i + 1;
+                dto.rank = currentRank;
+            }
+
+            prevPoints = dto.points;
+        }
+
+        return rankings;
     }
 
     public String getLogin() {
@@ -49,12 +96,21 @@ public class UserRankingDTO implements Comparable<UserRankingDTO> {
         this.points = points;
     }
 
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
+    }
+
     @Override
     public String toString() {
-        return "UserDTO{" +
+        return "UserRankingDTO{" +
             "login='" + login + '\'' +
             ", points=" + points +
-            "}";
+            ", rank=" + rank +
+            '}';
     }
 
     @Override
