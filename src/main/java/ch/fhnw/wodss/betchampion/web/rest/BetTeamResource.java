@@ -173,6 +173,10 @@ public class BetTeamResource {
             BetTeam team =  betTeamService.findOne(id);
             team.removeMembers(user);
             betTeamService.save(team);
+            //Delete Team if necessary
+            if(team.getMembers().size() == 0){
+                betTeamService.delete(team.getId());
+            }
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
