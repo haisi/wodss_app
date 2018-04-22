@@ -6,6 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { BetTeam } from './bet-team.model';
 import { BetTeamService } from './bet-team.service';
+import {User} from "../../shared";
 
 @Component({
     selector: 'jhi-bet-team-detail',
@@ -17,6 +18,7 @@ export class BetTeamDetailComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     private eventSubscriber: Subscription;
 
+    public searchString: string;
     constructor(
         private eventManager: JhiEventManager,
         private betTeamService: BetTeamService,

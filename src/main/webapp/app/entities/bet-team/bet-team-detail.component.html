@@ -8,6 +8,7 @@
         <dd>
             <span>{{betTeam.betTeamName}}</span>
         </dd>
+        <input type="text" class="form-control" name="searchString" placeholder="Type to search..." [(ngModel)]="searchString">
         <dt><span jhiTranslate="userManagement.ranking">Rangliste</span></dt>
 
         <div class="table-responsive">
@@ -21,7 +22,7 @@
                 </thead>
                 <tbody>
                 <!--<tbody *ngIf ="members">-->
-                <tr *ngFor="let members of betTeam.members">
+                <tr *ngFor="let members of betTeam.members | filter : 'login' : searchString;">
                     <td>{{members.points}}</td>
                     <td>{{members.login}}</td>
                 </tr>
