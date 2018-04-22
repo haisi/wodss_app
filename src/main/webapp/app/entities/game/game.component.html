@@ -41,6 +41,16 @@
                         <a [routerLink]="['../team', game.team2?.id ]" >{{game.team2?.teamName}}</a>
                     </div>
                 </td>
+                <td>{{game.draw}}</td>
+                <td>
+                    <table>
+                        <tr>
+                            <td style="background-color: blue" width="20%">{{game.team1Won}}%</td>
+                            <td style="background-color: green" width="30%">{{game.draw}}%</td>
+                            <td style="background-color: red" width="50%">{{game.team2Won}}%</td>
+                        </tr>
+                    </table>
+                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

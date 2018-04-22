@@ -1,6 +1,7 @@
 package ch.fhnw.wodss.betchampion.repository;
 
 import ch.fhnw.wodss.betchampion.domain.Bet;
+import ch.fhnw.wodss.betchampion.domain.Game;
 import ch.fhnw.wodss.betchampion.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,4 +21,6 @@ public interface BetRepository extends JpaRepository<Bet, Long> {
     Page<Bet> findByUserIsCurrentUser(Pageable pageable);
 
     List<Bet> findAllByUser(User user);
+
+    List<Bet> findAllByGame(Game game);
 }

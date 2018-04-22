@@ -1,6 +1,8 @@
 package ch.fhnw.wodss.betchampion.service;
 
 import ch.fhnw.wodss.betchampion.domain.Bet;
+import ch.fhnw.wodss.betchampion.domain.Game;
+import ch.fhnw.wodss.betchampion.domain.Stats;
 import ch.fhnw.wodss.betchampion.repository.BetRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 /**
@@ -68,5 +72,20 @@ public class BetService {
     public void delete(Long id) {
         log.debug("Request to delete Bet : {}", id);
         betRepository.delete(id);
+    }
+
+    public Stats getStats(Game game){
+        List<Bet> bets = betRepository.findAllByGame(game);
+        int t1 = 0, t2 = 0, draw = 0;
+        for(Bet b: bets){
+            if(b.getGoalsTeam1().equals(b.getGoalsTeam2())){
+                draw++;
+            }else if(b.getGoalsTeam1() > b.getGoalsTeam2()){
+                t1++;
+            }else {
+                t2++;
+            }
+        }
+        return new Stats(t1+t2+draw,t1,t2,draw);
     }
 }

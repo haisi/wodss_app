@@ -1,5 +1,6 @@
 package ch.fhnw.wodss.betchampion.web.rest;
 
+import ch.fhnw.wodss.betchampion.service.BetService;
 import com.codahale.metrics.annotation.Timed;
 import ch.fhnw.wodss.betchampion.domain.Game;
 import ch.fhnw.wodss.betchampion.service.GameService;
@@ -35,9 +36,11 @@ public class GameResource {
     private static final String ENTITY_NAME = "game";
 
     private final GameService gameService;
+    private final BetService betService;
 
-    public GameResource(GameService gameService) {
+    public GameResource(GameService gameService, BetService betService) {
         this.gameService = gameService;
+        this.betService = betService;
     }
 
     /**
@@ -94,7 +97,9 @@ public class GameResource {
         log.debug("REST request to get a page of Games");
         Page<Game> page = gameService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/games");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        List<Game> games = page.getContent();
+        games.forEach(game -> game.setStats(betService.getStats(game)));
+        return new ResponseEntity<>(games, headers, HttpStatus.OK);
     }
 
     /**
@@ -108,6 +113,7 @@ public class GameResource {
     public ResponseEntity<Game> getGame(@PathVariable Long id) {
         log.debug("REST request to get Game : {}", id);
         Game game = gameService.findOne(id);
+        game.setStats(betService.getStats(game));
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(game));
     }
 

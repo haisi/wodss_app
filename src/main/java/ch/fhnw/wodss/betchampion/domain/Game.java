@@ -1,6 +1,9 @@
 package ch.fhnw.wodss.betchampion.domain;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -40,6 +43,27 @@ public class Game implements Serializable {
 
     @ManyToOne
     private Team team2;
+
+    @Transient
+    @JsonSerialize
+    @JsonDeserialize
+    private Integer totalBets;
+
+    @Transient
+    @JsonSerialize
+    @JsonDeserialize
+    private Integer team1Won;
+
+    @Transient
+    @JsonSerialize
+    @JsonDeserialize
+    private Integer team2Won;
+
+    @Transient
+    @JsonSerialize
+    @JsonDeserialize
+    private Integer draw;
+
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -144,5 +168,29 @@ public class Game implements Serializable {
             ", goalsTeam1=" + getGoalsTeam1() +
             ", goalsTeam2=" + getGoalsTeam2() +
             "}";
+    }
+
+
+    public Integer getTotalBets() {
+        return 30;//totalBets;
+    }
+
+    public Integer getTeam1Won() {
+        return 5;//team1Won;
+    }
+
+    public Integer getTeam2Won() {
+        return 10;//team2Won;
+    }
+
+    public Integer getDraw() {
+        return 15;//draw;
+    }
+
+    public void setStats(Stats stats) {
+        this.totalBets = stats.total;
+        this.team1Won = stats.winTeam1;
+        this.team2Won = stats.winTeam2;
+        this.draw = stats.draw;
     }
 }

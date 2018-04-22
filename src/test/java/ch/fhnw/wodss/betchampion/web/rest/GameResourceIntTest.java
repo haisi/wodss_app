@@ -3,7 +3,9 @@ package ch.fhnw.wodss.betchampion.web.rest;
 import ch.fhnw.wodss.betchampion.BetChampionApp;
 
 import ch.fhnw.wodss.betchampion.domain.Game;
+import ch.fhnw.wodss.betchampion.repository.BetRepository;
 import ch.fhnw.wodss.betchampion.repository.GameRepository;
+import ch.fhnw.wodss.betchampion.service.BetService;
 import ch.fhnw.wodss.betchampion.service.GameService;
 import ch.fhnw.wodss.betchampion.web.rest.errors.ExceptionTranslator;
 
@@ -57,6 +59,9 @@ public class GameResourceIntTest {
     private GameRepository gameRepository;
 
     @Autowired
+    private BetService betService;
+
+    @Autowired
     private GameService gameService;
 
     @Autowired
@@ -78,7 +83,7 @@ public class GameResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final GameResource gameResource = new GameResource(gameService);
+        final GameResource gameResource = new GameResource(gameService, betService);
         this.restGameMockMvc = MockMvcBuilders.standaloneSetup(gameResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
