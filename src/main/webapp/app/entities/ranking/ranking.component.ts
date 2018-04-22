@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
 import { ITEMS_PER_PAGE, Principal, User, UserService } from '../../shared';
+import {Subject} from "rxjs/Subject";
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
     selector: 'ranking',
@@ -24,6 +26,8 @@ export class RankingComponent implements OnInit, OnDestroy {
     predicate: any;
     previousPage: any;
     reverse: any;
+    public searchString: string;
+    private subject: Subject<string> = new Subject();
 
     constructor(
         private userService: UserService,
@@ -49,6 +53,13 @@ export class RankingComponent implements OnInit, OnDestroy {
             this.loadAll();
             this.registerChangeInUsers();
         });
+        this.subject.debounceTime(500).subscribe(() => {
+            this.loadAll();
+        });
+    }
+
+    onKeyUp(){
+        this.subject.next();
     }
 
     ngOnDestroy() {
@@ -79,11 +90,12 @@ export class RankingComponent implements OnInit, OnDestroy {
         this.userService.queryRank({
             page: this.page - 1,
             size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
+            sort: this.sort()},this.searchString).subscribe(
                 (res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers),
                 (res: HttpResponse<any>) => this.onError(res.body)
         );
     }
+
 
     trackIdentity(index, item: User) {
         return item.id;

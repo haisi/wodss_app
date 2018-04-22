@@ -225,7 +225,12 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
-        return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
+        return userRepository.findAll(pageable).map(UserDTO::new);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<UserDTO> getAllUsersContaining(Pageable pageable, String login) {
+        return userRepository.findByLoginContainingIgnoreCase(pageable, login).map(UserDTO::new);
     }
 
     @Transactional(readOnly = true)

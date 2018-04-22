@@ -1,6 +1,7 @@
 package ch.fhnw.wodss.betchampion.web.rest;
 
 import ch.fhnw.wodss.betchampion.config.Constants;
+import ch.fhnw.wodss.betchampion.service.PointUpdateService;
 import ch.fhnw.wodss.betchampion.service.dto.UserRankingDTO;
 import com.codahale.metrics.annotation.Timed;
 import ch.fhnw.wodss.betchampion.domain.User;
@@ -19,7 +20,6 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -69,11 +69,14 @@ public class UserResource {
 
     private final MailService mailService;
 
-    public UserResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    private final PointUpdateService pointUpdateService;
+
+    public UserResource(UserRepository userRepository, UserService userService, MailService mailService, PointUpdateService pointUpdateService) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.pointUpdateService = pointUpdateService;
     }
 
     /**
@@ -104,6 +107,7 @@ public class UserResource {
         } else {
             User newUser = userService.createUser(userDTO);
             mailService.sendCreationEmail(newUser);
+            pointUpdateService.updatePoints();
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert( "userManagement.created", newUser.getLogin()))
                 .body(newUser);
@@ -159,9 +163,15 @@ public class UserResource {
      */
     @GetMapping("/usersRanking")
     @Timed
-    public ResponseEntity<List<UserRankingDTO>> getAllUserRank(Pageable pageable) {
-        final Page<UserDTO> userPage = userService.getAllManagedUsers(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(userPage, "/api/usersRanking");
+    public ResponseEntity<List<UserRankingDTO>> getAllUserRank(Pageable pageable, @RequestParam(value="query", required=false) String query) {
+        log.debug("Get Ranking: >"+query+"<");
+        Page<UserDTO> userPage;
+        if (query == null || query.trim().isEmpty() || query.equals("undefined")){
+            userPage = userService.getAllManagedUsers(pageable);
+        }else{
+            userPage = userService.getAllUsersContaining(pageable,query);
+        }
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(userPage, "/api/usersRalnking");
         return new ResponseEntity<>(userPage.getContent().stream().map(UserDTO::toRank).collect(Collectors.toList()), headers, HttpStatus.OK);
     }
 

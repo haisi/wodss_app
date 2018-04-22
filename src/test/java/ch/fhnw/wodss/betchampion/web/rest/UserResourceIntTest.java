@@ -1,12 +1,12 @@
 package ch.fhnw.wodss.betchampion.web.rest;
 
 import ch.fhnw.wodss.betchampion.BetChampionApp;
-import ch.fhnw.wodss.betchampion.config.CacheConfiguration;
 import ch.fhnw.wodss.betchampion.domain.Authority;
 import ch.fhnw.wodss.betchampion.domain.User;
 import ch.fhnw.wodss.betchampion.repository.UserRepository;
 import ch.fhnw.wodss.betchampion.security.AuthoritiesConstants;
 import ch.fhnw.wodss.betchampion.service.MailService;
+import ch.fhnw.wodss.betchampion.service.PointUpdateService;
 import ch.fhnw.wodss.betchampion.service.UserService;
 import ch.fhnw.wodss.betchampion.service.dto.UserDTO;
 import ch.fhnw.wodss.betchampion.service.mapper.UserMapper;
@@ -77,6 +77,9 @@ public class UserResourceIntTest {
     private MailService mailService;
 
     @Autowired
+    private PointUpdateService pointUpdateService;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -106,7 +109,7 @@ public class UserResourceIntTest {
         MockitoAnnotations.initMocks(this);
         cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).clear();
         cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).clear();
-        UserResource userResource = new UserResource(userRepository, userService, mailService);
+        UserResource userResource = new UserResource(userRepository, userService, mailService, pointUpdateService);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
