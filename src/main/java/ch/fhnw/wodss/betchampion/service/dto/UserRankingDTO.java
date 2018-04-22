@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * A DTO representing a user, with his authorities.
  */
-public class UserRankingDTO {
+public class UserRankingDTO implements Comparable<UserRankingDTO> {
     @NotBlank
     @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 50)
@@ -55,5 +55,10 @@ public class UserRankingDTO {
             "login='" + login + '\'' +
             ", points=" + points +
             "}";
+    }
+
+    @Override
+    public int compareTo(UserRankingDTO o) {
+        return Integer.compare(o.points, this.points);
     }
 }

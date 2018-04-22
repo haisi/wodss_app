@@ -21,7 +21,7 @@ public class BetTeamRankingDto {
     public BetTeamRankingDto(BetTeam betTeam) {
         this.id = betTeam.getId();
         this.betTeamName = betTeam.getBetTeamName();
-        this.members = betTeam.getMembers().stream().map(UserRankingDTO::new).collect(Collectors.toList());
+        this.members = betTeam.getMembers().stream().map(UserRankingDTO::new).sorted().collect(Collectors.toList());
     }
 
     public Long getId() {
