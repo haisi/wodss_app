@@ -172,19 +172,19 @@ public class Game implements Serializable {
 
 
     public Integer getTotalBets() {
-        return 30;//totalBets;
+        return totalBets;
     }
 
     public Integer getTeam1Won() {
-        return 5;//team1Won;
+        return team1Won;
     }
 
     public Integer getTeam2Won() {
-        return 10;//team2Won;
+        return team2Won;
     }
 
     public Integer getDraw() {
-        return 15;//draw;
+        return draw;
     }
 
     public void setStats(Stats stats) {

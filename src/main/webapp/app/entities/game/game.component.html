@@ -18,9 +18,10 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="matchTime"><span jhiTranslate="betChampionApp.game.matchTime">Match Time</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="goalsTeam1"><span jhiTranslate="betChampionApp.game.goalsTeam1">Goals Team 1</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="goalsTeam2"><span jhiTranslate="betChampionApp.game.goalsTeam2">Goals Team 2</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="team1.teamName"><span jhiTranslate="betChampionApp.game.team1">Team 1</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="goalsTeam1"><span jhiTranslate="betChampionApp.game.goalsTeam1">Goals Team 1</span> <span class="fa fa-sort"></span></th>
+            <th width="30%"><span>Stats</span></th>
+            <th jhiSortBy="goalsTeam2"><span jhiTranslate="betChampionApp.game.goalsTeam2">Goals Team 2</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="team2.teamName"><span jhiTranslate="betChampionApp.game.team2">Team 2</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
@@ -29,27 +30,24 @@
             <tr *ngFor="let game of games ;trackBy: trackId">
                 <td><a [routerLink]="['../game', game.id ]">{{game.id}}</a></td>
                 <td>{{game.matchTime | date:'medium'}}</td>
-                <td>{{game.goalsTeam1}}</td>
-                <td>{{game.goalsTeam2}}</td>
                 <td>
                     <div *ngIf="game.team1">
                         <a [routerLink]="['../team', game.team1?.id ]" >{{game.team1?.teamName}}</a>
                     </div>
                 </td>
+                <td>{{game.goalsTeam1}}</td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar"  [style.width.%]="game.team1Won" aria-valuemin="0" aria-valuemax="100">{{game.team1Won==0?'':game.team1Won+'%'}}</div>
+                        <div class="progress-bar bg-success" role="progressbar"  [style.width.%]="game.draw" aria-valuemin="0" aria-valuemax="100">{{game.draw==0?'':game.draw+'%'}}</div>
+                        <div class="progress-bar bg-info" role="progressbar"  [style.width.%]="game.team2Won" aria-valuemin="0" aria-valuemax="100">{{game.team2Won==0?'':game.team2Won+'%'}}</div>
+                    </div>
+                </td>
+                <td>{{game.goalsTeam2}}</td>
                 <td>
                     <div *ngIf="game.team2">
                         <a [routerLink]="['../team', game.team2?.id ]" >{{game.team2?.teamName}}</a>
                     </div>
-                </td>
-                <td>{{game.draw}}</td>
-                <td>
-                    <table>
-                        <tr>
-                            <td style="background-color: blue" width="20%">{{game.team1Won}}%</td>
-                            <td style="background-color: green" width="30%">{{game.draw}}%</td>
-                            <td style="background-color: red" width="50%">{{game.team2Won}}%</td>
-                        </tr>
-                    </table>
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">

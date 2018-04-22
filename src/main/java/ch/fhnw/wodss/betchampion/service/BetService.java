@@ -86,6 +86,12 @@ public class BetService {
                 t2++;
             }
         }
-        return new Stats(t1+t2+draw,t1,t2,draw);
+        int total = t1+t2+draw;
+        if(total != 0){
+            t1 = (t1 * 100)/total;
+            t2 = (t2 * 100)/total;
+            draw = (draw * 100)/total;
+        }
+        return new Stats(total,t1,t2,draw);
     }
 }
