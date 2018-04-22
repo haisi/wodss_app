@@ -8,6 +8,7 @@
         <dd>
             <span>{{betTeam.betTeamName}}</span>
         </dd>
+        <input type="text" class="form-control" name="searchString" placeholder="Type to search..." [(ngModel)]="searchString">
         <dt><span jhiTranslate="userManagement.ranking">Rangliste</span></dt>
 
         <div class="table-responsive">
@@ -15,13 +16,15 @@
             <table class="table table-striped">
                 <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse">
+                    <th jhiSortBy="points"><span jhiTranslate="userManagement.rank">Rang</span> <span class="fa fa-sort"></span></th>
                     <th jhiSortBy="points"><span jhiTranslate="userManagement.points">Punkte</span> <span class="fa fa-sort"></span></th>
                     <th jhiSortBy="login"><span jhiTranslate="userManagement.detail.title">Benutzer</span> <span class="fa fa-sort"></span></th>
                 </tr>
                 </thead>
                 <tbody>
                 <!--<tbody *ngIf ="members">-->
-                <tr *ngFor="let members of betTeam.members">
+                <tr *ngFor="let members of betTeam.members | filter : 'login' : searchString;">
+                    <td>{{members.rank}}</td>
                     <td>{{members.points}}</td>
                     <td>{{members.login}}</td>
                 </tr>

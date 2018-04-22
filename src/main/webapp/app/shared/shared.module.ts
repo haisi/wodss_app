@@ -1,5 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {
     BetChampionSharedLibsModule,
@@ -15,6 +16,7 @@ import {
     Principal,
     HasAnyAuthorityDirective,
 } from './';
+import {FilterPipe} from "../pipes";
 
 @NgModule({
     imports: [
@@ -23,7 +25,8 @@ import {
     ],
     declarations: [
         JhiLoginModalComponent,
-        HasAnyAuthorityDirective
+        HasAnyAuthorityDirective,
+        FilterPipe
     ],
     providers: [
         LoginService,
@@ -41,7 +44,8 @@ import {
         BetChampionSharedCommonModule,
         JhiLoginModalComponent,
         HasAnyAuthorityDirective,
-        DatePipe
+        DatePipe,
+        FilterPipe
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
