@@ -28,7 +28,7 @@ export class BetTeamService {
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<BetTeam>(`${this.resourceUrl}/${id}`, { observe: 'response'})
+        return this.http.get<BetTeam>(`${this.resourceUrl}/${id}/ranking`, { observe: 'response'})
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
