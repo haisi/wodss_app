@@ -7,14 +7,16 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-                <th jhiSortBy="login"><span jhiTranslate="userManagement.detail.title">Benutzer</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="points"><span jhiTranslate="userManagement.rank">Rang</span> <span class="fa fa-sort"></span></th>
                 <th jhiSortBy="points"><span jhiTranslate="userManagement.points">Punkte</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="login"><span jhiTranslate="userManagement.detail.title">Benutzer</span> <span class="fa fa-sort"></span></th>
             </tr>
             </thead>
             <tbody *ngIf ="users">
             <tr *ngFor="let user of users; trackBy: trackIdentity">
-                <td>{{user.login}}</td>
+                <td>{{user.rank}}</td>
                 <td>{{user.points}}</td>
+                <td>{{user.login}}</td>
             </tr>
             </tbody>
         </table>

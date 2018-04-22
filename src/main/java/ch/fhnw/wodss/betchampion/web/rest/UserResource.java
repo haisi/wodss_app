@@ -162,7 +162,7 @@ public class UserResource {
     public ResponseEntity<List<UserRankingDTO>> getAllUserRank(Pageable pageable) {
         final Page<UserDTO> userPage = userService.getAllManagedUsers(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(userPage, "/api/usersRanking");
-        return new ResponseEntity<>(userPage.getContent().stream().map(UserDTO::toRank).collect(Collectors.toList()), headers, HttpStatus.OK);
+        return new ResponseEntity<>(UserRankingDTO.addRanking(userPage.getContent().stream().map(UserDTO::toRank).collect(Collectors.toList())), headers, HttpStatus.OK);
     }
 
 

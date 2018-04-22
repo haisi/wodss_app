@@ -49,7 +49,7 @@ public class UserRankingDTO implements Comparable<UserRankingDTO> {
      * @param rankings
      * @return
      */
-    static List<UserRankingDTO> addRanking(List<UserRankingDTO> rankings) {
+    public static List<UserRankingDTO> addRanking(List<UserRankingDTO> rankings) {
 
         if (rankings.isEmpty()) {
             return rankings;
