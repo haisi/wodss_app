@@ -1,9 +1,9 @@
 package ch.fhnw.wodss.betchampion.web.rest;
 
-import ch.fhnw.wodss.betchampion.domain.Team;
 import ch.fhnw.wodss.betchampion.domain.User;
 import ch.fhnw.wodss.betchampion.repository.UserRepository;
 import ch.fhnw.wodss.betchampion.security.SecurityUtils;
+import ch.fhnw.wodss.betchampion.service.dto.BetTeamRankingDto;
 import com.codahale.metrics.annotation.Timed;
 import ch.fhnw.wodss.betchampion.domain.BetTeam;
 import ch.fhnw.wodss.betchampion.service.BetTeamService;
@@ -119,6 +119,21 @@ public class BetTeamResource {
         log.debug("REST request to get BetTeam : {}", id);
         BetTeam betTeam = betTeamService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(betTeam));
+    }
+
+    /**
+     * GET  /bet-teams/:id/ranking : get the "id" betTeam.
+     *
+     * @param id the id of the betTeam to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the betTeam, or with status 404 (Not Found)
+     */
+    @GetMapping("/bet-teams/{id}/ranking")
+    @Timed
+    public ResponseEntity<BetTeamRankingDto> getBetTeamRanking(@PathVariable Long id) {
+        log.debug("REST request to get BetTeamRanking : {}", id);
+        BetTeam betTeam = betTeamService.findOne(id);
+        BetTeamRankingDto betTeamRankingDto = new BetTeamRankingDto(betTeam);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(betTeamRankingDto));
     }
 
     /**

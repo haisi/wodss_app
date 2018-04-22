@@ -8,12 +8,26 @@
         <dd>
             <span>{{betTeam.betTeamName}}</span>
         </dd>
-        <dt><span jhiTranslate="betChampionApp.betTeam.members">Members</span></dt>
-        <dd>
-            <span *ngFor="let members of betTeam.members; let last = last">
-                {{members.login}}{{last ? '' : ', '}}
-            </span>
-        </dd>
+        <dt><span jhiTranslate="userManagement.ranking">Rangliste</span></dt>
+
+        <div class="table-responsive">
+        <!--<div class="table-responsive" *ngIf="users">-->
+            <table class="table table-striped">
+                <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse">
+                    <th jhiSortBy="points"><span jhiTranslate="userManagement.points">Punkte</span> <span class="fa fa-sort"></span></th>
+                    <th jhiSortBy="login"><span jhiTranslate="userManagement.detail.title">Benutzer</span> <span class="fa fa-sort"></span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--<tbody *ngIf ="members">-->
+                <tr *ngFor="let members of betTeam.members">
+                    <td>{{members.points}}</td>
+                    <td>{{members.login}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </dl>
 
     <button type="submit"
