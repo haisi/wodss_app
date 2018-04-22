@@ -47,6 +47,7 @@
             <column name="last_modified_by" type="varchar(50)"/>
             <column name="last_modified_date" type="timestamp"/>
             <column name="points" type="integer"/>
+            <column name="rank" type="integer"/>
         </createTable>
         <createIndex indexName="idx_user_login"
             tableName="jhi_user"

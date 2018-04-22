@@ -84,6 +84,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "points")
     private Integer points;
 
+    @Column(name = "rank")
+    private Integer rank;
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(
@@ -194,6 +197,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public Integer getPoints(){return points;}
 
     public void setPoints(Integer points){this.points = points;}
+
+    public Integer getRank(){return rank;}
+
+    public void setRank(Integer rank){this.rank = rank;}
 
     public Set<Authority> getAuthorities() {
         return authorities;

@@ -10,7 +10,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -33,6 +35,8 @@ public class PointUpdateService {
         List<User> users = userRepository.findAll();
         users.forEach(this::updateUser);
         log.debug("All points calculated");
+        updateRank();
+        log.debug("All ranks updated");
     }
 
 
@@ -56,5 +60,23 @@ public class PointUpdateService {
         user.setPoints(points);
     }
 
+    private void updateRank(){
+        List<User> users = userRepository.findAll();
+        users = users.stream().sorted(Comparator.comparingInt(User::getPoints)).collect(Collectors.toList());
 
+        int currentRank = 1;
+        int prevPoints = users.get(0).getPoints();
+
+        for (int i = 0; i < users.size(); i++) {
+            User u = users.get(i);
+            Integer currentPoints = u.getPoints();
+
+            if (currentPoints != prevPoints) {
+                currentRank = i + 1;
+            }
+
+            u.setRank(currentRank);
+            prevPoints = u.getPoints();
+        }
+    }
 }

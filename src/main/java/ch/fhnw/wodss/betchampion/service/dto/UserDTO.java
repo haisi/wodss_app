@@ -55,6 +55,8 @@ public class UserDTO {
 
     private Integer points;
 
+    private Integer rank;
+
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -73,6 +75,7 @@ public class UserDTO {
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
         this.points = user.getPoints();
+        this.rank = user.getRank();
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
@@ -194,6 +197,7 @@ public class UserDTO {
         UserRankingDTO urDTO = new UserRankingDTO();
         urDTO.setPoints(this.points);
         urDTO.setLogin(this.login);
+        urDTO.setRank(this.rank);
         return  urDTO;
     }
 
@@ -213,6 +217,7 @@ public class UserDTO {
             ", lastModifiedDate=" + lastModifiedDate +
             ", authorities=" + authorities +
             ", points=" + points +
+            ", rank=" + rank +
             "}";
     }
 }

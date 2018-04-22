@@ -32,6 +32,7 @@ public class UserRankingDTO implements Comparable<UserRankingDTO> {
     public UserRankingDTO(User user) {
         this.login = user.getLogin();
         this.points = user.getPoints();
+        this.rank = user.getRank();
     }
 
     /**
