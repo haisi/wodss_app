@@ -28,6 +28,8 @@
         "lastModifiedDate": "Modified date",
         "points": "Points",
         "ranking": "Ranking",
-        "rank": "Rank"
+        "rank": "Rank",
+        "teamranking": "Team Ranking"
+
     }
 }

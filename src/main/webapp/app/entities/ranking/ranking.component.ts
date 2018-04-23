@@ -7,6 +7,10 @@ import { ITEMS_PER_PAGE, Principal, User, UserService } from '../../shared';
 import {Subject} from "rxjs/Subject";
 import 'rxjs/add/operator/debounceTime';
 
+import {Team, TeamService} from "../team";
+import {BetTeam, BetTeamService} from "../bet-team";
+
+
 @Component({
     selector: 'ranking',
     templateUrl: './ranking.component.html'
@@ -15,22 +19,30 @@ export class RankingComponent implements OnInit, OnDestroy {
 
     currentAccount: any;
     users: User[];
+    betTeams: BetTeam[];
+    betTeam: BetTeam;
     error: any;
     success: any;
     routeData: any;
     links: any;
+    linksTeam: any;
     totalItems: any;
+    totalItemsTeam: any;
     queryCount: any;
+    queryCountTeam: any;
     itemsPerPage: any;
     page: any;
     predicate: any;
+    predicateT: any;
     previousPage: any;
     reverse: any;
+    reverseT: any;
     public searchString: string;
     private subject: Subject<string> = new Subject();
 
     constructor(
         private userService: UserService,
+        private betTeamService: BetTeamService,
         private alertService: JhiAlertService,
         private principal: Principal,
         private parseLinks: JhiParseLinks,
@@ -44,6 +56,8 @@ export class RankingComponent implements OnInit, OnDestroy {
             this.previousPage = data['pagingParams'].page;
             this.reverse = data['pagingParams'].ascending;
             this.predicate = data['pagingParams'].predicate;
+            this.reverseT = data['pagingParams'].ascending;
+            this.predicateT = data['pagingParams'].predicate;
         });
     }
 
@@ -56,6 +70,7 @@ export class RankingComponent implements OnInit, OnDestroy {
         this.subject.debounceTime(500).subscribe(() => {
             this.loadAll();
         });
+        this.router.onSameUrlNavigation = 'reload';
     }
 
     onKeyUp(){
@@ -87,14 +102,24 @@ export class RankingComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
+
         this.userService.queryRank({
+                page: this.page - 1,
+                size: this.itemsPerPage,
+                sort: this.sort()},this.searchString).subscribe(
+                    (res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers),
+                    (res: HttpResponse<any>) => this.onError(res.body)
+            );
+
+        this.betTeamService.query({
             page: this.page - 1,
             size: this.itemsPerPage,
-            sort: this.sort()},this.searchString).subscribe(
-                (res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers),
-                (res: HttpResponse<any>) => this.onError(res.body)
+            sort: this.sortTeam() }).subscribe(
+            (res: HttpResponse<BetTeam[]>) => this.onSuccessTeam(res.body, res.headers),
+            (res: HttpResponse<any>) => this.onError(res.body)
         );
     }
+
 
 
     trackIdentity(index, item: User) {
@@ -107,6 +132,10 @@ export class RankingComponent implements OnInit, OnDestroy {
             result.push('id');
         }
         return result;
+    }
+
+    sortTeam(){
+        return ['betTeamName','asc'];
     }
 
     loadPage(page: number) {
@@ -126,6 +155,16 @@ export class RankingComponent implements OnInit, OnDestroy {
         this.loadAll();
     }
 
+    transitionTeam(this, betTeam) {
+        this.router.navigate(['/ranking'], {
+            queryParams: {
+                page: this.page
+                /*sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')*/
+            }
+        });
+        this.sortMembersOfTeam( betTeam);
+    }
+
     private onSuccess(data, headers) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
@@ -133,7 +172,28 @@ export class RankingComponent implements OnInit, OnDestroy {
         this.users = data;
     }
 
+    private onSuccessTeam(data, headers) {
+        this.linksTeam = this.parseLinks.parse(headers.get('link'));
+        this.totalItemsTeam = headers.get('X-Total-Count');
+        this.queryCountTeam = this.totalItemsTeam;
+        this.betTeams = data;
+    }
+
     private onError(error) {
         this.alertService.error(error.error, error.message, null);
     }
+
+    sortMembersOfTeam( betTeam ){
+
+        const index = this.betTeams.indexOf(betTeam)
+
+        if (this.predicate == 'login')
+            this.betTeams[index].members.sort().reverse();
+         else if (this.predicate == 'rank')
+            this.betTeam.members.sort().reverse();
+        else
+            this.betTeams[index].members.sort((a, b) => (a.points - b.points));
+
+    }
+
 }
