@@ -74,7 +74,11 @@ export class GameService {
     private convert(game: Game): Game {
         const copy: Game = Object.assign({}, game);
 
-        copy.matchTime = this.dateUtils.toDate(game.matchTime);
+        try {
+            copy.matchTime = this.dateUtils.toDate(game.matchTime);
+        } catch(e){
+            copy.matchTime = game.matchTime;
+        }
         return copy;
     }
 }

@@ -35,7 +35,10 @@
                         <a [routerLink]="['../team', game.team1?.id ]" >{{game.team1?.teamName}}</a>
                     </div>
                 </td>
-                <td>{{game.goalsTeam1}}</td>
+                <td>
+                    <inline-editor type="text" [(ngModel)]="game.goalsTeam1" (onSave)="save(game)" name="editableText1" size="8"></inline-editor>
+                </td>
+
                 <td>
                     <div class="progress">
                         <div class="progress-bar" role="progressbar"  [style.width.%]="game.team1Won" aria-valuemin="0" aria-valuemax="100">{{game.team1Won==0?'':game.team1Won+'%'}}</div>
@@ -43,7 +46,9 @@
                         <div class="progress-bar bg-info" role="progressbar"  [style.width.%]="game.team2Won" aria-valuemin="0" aria-valuemax="100">{{game.team2Won==0?'':game.team2Won+'%'}}</div>
                     </div>
                 </td>
-                <td>{{game.goalsTeam2}}</td>
+                <td>
+                    <inline-editor type="text" [(ngModel)]="game.goalsTeam2" (onSave)="save(game)" name="editableText1" size="8"></inline-editor>
+                </td>
                 <td>
                     <div *ngIf="game.team2">
                         <a [routerLink]="['../team', game.team2?.id ]" >{{game.team2?.teamName}}</a>

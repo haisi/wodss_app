@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { BetChampionSharedModule } from '../../shared';
+import {InlineEditorModule} from '@qontu/ngx-inline-editor';
 import {
     GameService,
     GamePopupService,
@@ -24,7 +25,8 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         BetChampionSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        InlineEditorModule
     ],
     declarations: [
         GameComponent,

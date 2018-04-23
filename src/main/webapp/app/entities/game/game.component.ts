@@ -7,6 +7,7 @@ import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 import { Game } from './game.model';
 import { GameService } from './game.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
     selector: 'jhi-game',
@@ -28,6 +29,7 @@ currentAccount: any;
     predicate: any;
     previousPage: any;
     reverse: any;
+    isSaving: boolean;
 
     constructor(
         private gameService: GameService,
@@ -106,6 +108,25 @@ currentAccount: any;
             result.push('id');
         }
         return result;
+    }
+
+    save(game) {
+        this.subscribeToSaveResponse(
+            this.gameService.update(game));
+    }
+
+    private subscribeToSaveResponse(result: Observable<HttpResponse<Game>>) {
+        result.subscribe((res: HttpResponse<Game>) =>
+            this.onSaveSuccess(res.body), (res: HttpErrorResponse) => this.onSaveError());
+    }
+
+    private onSaveSuccess(result: Game) {
+        this.eventManager.broadcast({ name: 'gameListModification', content: 'OK'});
+        this.isSaving = false;
+    }
+
+    private onSaveError() {
+        this.isSaving = false;
     }
 
     private onSuccess(data, headers) {
