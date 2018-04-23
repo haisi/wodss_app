@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy, Input} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
@@ -9,7 +9,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Bet } from './bet.model';
 import { BetPopupService } from './bet-popup.service';
 import { BetService } from './bet.service';
-import { User, UserService } from '../../shared';
+import {User, UserService, Principal, Account} from '../../shared';
 import { Game, GameService } from '../game';
 
 @Component({
@@ -23,6 +23,8 @@ export class BetDialogComponent implements OnInit {
 
     users: User[];
 
+    currentAccount: Account;
+
     games: Game[];
 
     constructor(
@@ -31,11 +33,15 @@ export class BetDialogComponent implements OnInit {
         private betService: BetService,
         private userService: UserService,
         private gameService: GameService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private principal: Principal
     ) {
     }
 
     ngOnInit() {
+        this.principal.identity().then((account) => {
+            this.currentAccount = account;
+        });
         this.isSaving = false;
         this.userService.query()
             .subscribe((res: HttpResponse<User[]>) => { this.users = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
@@ -49,6 +55,9 @@ export class BetDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+        if (this.bet.user === undefined){
+            this.bet.user = this.currentAccount;
+        }
         if (this.bet.id !== undefined) {
             this.subscribeToSaveResponse(
                 this.betService.update(this.bet));

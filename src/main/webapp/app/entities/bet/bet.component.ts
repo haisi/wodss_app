@@ -7,6 +7,7 @@ import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 import { Bet } from './bet.model';
 import { BetService } from './bet.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
+import {Game, GameService} from "../game";
 
 @Component({
     selector: 'jhi-bet',
@@ -14,7 +15,7 @@ import { ITEMS_PER_PAGE, Principal } from '../../shared';
 })
 export class BetComponent implements OnInit, OnDestroy {
 
-currentAccount: any;
+    currentAccount: any;
     bets: Bet[];
     error: any;
     success: any;
@@ -28,6 +29,10 @@ currentAccount: any;
     predicate: any;
     previousPage: any;
     reverse: any;
+    isCreator: boolean;
+    games: Game[];
+    userBets: Bet[];
+    size: number;
 
     constructor(
         private betService: BetService,
@@ -36,7 +41,8 @@ currentAccount: any;
         private principal: Principal,
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private gameService: GameService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
@@ -50,7 +56,7 @@ currentAccount: any;
     loadAll() {
         this.betService.query({
             page: this.page - 1,
-            size: this.itemsPerPage,
+            size: 999, // get it all!!!
             sort: this.sort()}).subscribe(
                 (res: HttpResponse<Bet[]>) => this.onSuccess(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message)
@@ -66,7 +72,7 @@ currentAccount: any;
         this.router.navigate(['/bet'], {queryParams:
             {
                 page: this.page,
-                size: this.itemsPerPage,
+                size: 999,
                 sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
             }
         });
@@ -114,8 +120,29 @@ currentAccount: any;
         this.queryCount = this.totalItems;
         // this.page = pagingParams.page;
         this.bets = data;
+        this.loadGames();
+        this.filterBets();
     }
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
     }
+
+    isUser(bet: Bet) {
+        if (bet.user.id === this.currentAccount.id) {
+            this.isCreator = true;
+            return true;
+        }
+        this.isCreator = false;
+        return false;
+    }
+
+    loadGames(){
+        this.gameService.query().subscribe(y => this.games = y.body);
+    }
+
+    filterBets(){
+        this.userBets = this.bets;
+        this.userBets = this.userBets.filter(x => x.user.id === this.currentAccount.id)
+    }
+
 }

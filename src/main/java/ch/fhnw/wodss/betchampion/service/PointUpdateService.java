@@ -65,16 +65,17 @@ public class PointUpdateService {
         users = users.stream().sorted(Comparator.comparingInt(User::getPoints)).collect(Collectors.toList());
 
         int currentRank = 1;
-        int prevPoints = users.get(0).getPoints();
+        int prevPoints = users.get( users.size() - 1 ).getPoints();
 
-        for (int i = 0; i < users.size(); i++) {
+        int j = 0;
+        for (int i = users.size() - 1; i >= 0; i--) {
             User u = users.get(i);
             Integer currentPoints = u.getPoints();
 
             if (currentPoints != prevPoints) {
-                currentRank = i + 1;
+                currentRank = j + 1;
             }
-
+            j++;
             u.setRank(currentRank);
             prevPoints = u.getPoints();
         }

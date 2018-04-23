@@ -34,38 +34,14 @@
 <!-- Team Rankings-->
 <div *ngIf="betTeams">
     <h2>
-        <span jhiTranslate="userManagement.teamranking">Team Ranglisten</span>
+        <span jhiTranslate="userManagement.teamranking">Meine Team Ranglisten</span>
     </h2>
     <jhi-alert></jhi-alert>
 
-    <div *ngFor="let betTeam of betTeams" >
-        <h3>Team: {{betTeam.betTeamName}}</h3>
-        <div class="table-responsive" *ngIf="betTeams">
-            <table class="table table-striped">
-                <thead>
-                <tr jhiSort [(predicate)]="predicateT" [(ascending)]="reverseT" [callback]="transitionTeam.bind(this, betTeam)">
-                    <th jhiSortBy="rank"><span jhiTranslate="userManagement.rank">Rang</span> <span class="fa fa-sort"></span></th>
-                    <th jhiSortBy="login"><span jhiTranslate="userManagement.detail.title">Benutzer</span> <span class="fa fa-sort"></span></th>
-                    <th jhiSortBy="points"><span jhiTranslate="userManagement.points">Punkte</span> <span class="fa fa-sort"></span></th>
-                </tr>
-                </thead>
-                <tbody *ngIf ="betTeams">
-                <tr *ngFor="let member of betTeam.members; trackBy: trackIdentity">
-                    <td>{{member.rank}}</td>
-                    <td>{{member.login}}</td>
-                    <td>{{member.points}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div *ngIf="betTeam">
-            <div class="row justify-content-center">
-                <jhi-item-count [page]="page" [total]="betTeam.members.length" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-            </div>
-            <div class="row justify-content-center">
-                <ngb-pagination [collectionSize]="betTeam.members.length" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
-            </div>
+    <div *ngFor="let betTeamX of betTeams">
+        <div *ngIf="isMember(betTeamX)">
+            <h3>Team: {{betTeamX.betTeamName}}</h3>
+            <bet-team-members [betTeamId]="betTeamX.id" ></bet-team-members>
         </div>
     </div>
 </div>

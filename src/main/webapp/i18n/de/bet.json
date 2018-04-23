@@ -3,23 +3,23 @@
     "betChampionApp": {
         "bet" : {
             "home": {
-                "title": "Bets",
-                "createLabel": "Bet erstellen",
-                "createOrEditLabel": "Bet erstellen oder bearbeiten"
+                "title": "Meine Tipps",
+                "createLabel": "Tipp erstellen",
+                "createOrEditLabel": "Tipp erstellen oder bearbeiten"
             },
-            "created": "Bet erstellt mit ID {{ param }}",
-            "updated": "Bet aktualisiert mit ID {{ param }}",
-            "deleted": "Bet gelöscht mit ID {{ param }}",
+            "created": "Tipp erstellt mit ID {{ param }}",
+            "updated": "Tipp aktualisiert mit ID {{ param }}",
+            "deleted": "Tipp gelöscht mit ID {{ param }}",
             "delete": {
-                "question": "Soll Bet {{ id }} wirklich dauerhaft gelöscht werden?"
+                "question": "Soll Tipp {{ id }} wirklich dauerhaft gelöscht werden?"
             },
             "detail": {
-                "title": "Bet"
+                "title": "Tipp"
             },
             "goalsTeam1": "Goals Team 1",
             "goalsTeam2": "Goals Team 2",
-            "user": "User",
-            "game": "Game"
+            "user": "Benutzer",
+            "game": "Spiel"
         }
     }
 }
