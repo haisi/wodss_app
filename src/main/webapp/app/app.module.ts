@@ -27,6 +27,7 @@ import {
     ActiveMenuDirective,
     ErrorComponent
 } from './layouts';
+import { BetTeamMembersComponent } from './bet-team-members/bet-team-members.component';
 
 @NgModule({
     imports: [

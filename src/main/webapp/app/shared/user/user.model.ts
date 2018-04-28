@@ -13,6 +13,7 @@ export class User {
     public lastModifiedDate?: Date;
     public password?: string;
     public points?: number;
+    public rank?: number;
 
     constructor(
         id?: any,
@@ -28,7 +29,8 @@ export class User {
         lastModifiedBy?: string,
         lastModifiedDate?: Date,
         password?: string,
-        points?: number
+        points?: number,
+        rank?: number
     ) {
         this.id = id ? id : null;
         this.login = login ? login : null;
@@ -44,5 +46,6 @@ export class User {
         this.lastModifiedDate = lastModifiedDate ? lastModifiedDate : null;
         this.password = password ? password : null;
         this.points = points ? points : null;
+        this.rank = rank ? rank : null;
     }
 }

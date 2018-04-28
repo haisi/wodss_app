@@ -7,7 +7,6 @@ import { ITEMS_PER_PAGE, Principal, User, UserService } from '../../shared';
 import {Subject} from "rxjs/Subject";
 import 'rxjs/add/operator/debounceTime';
 
-import {Team, TeamService} from "../team";
 import {BetTeam, BetTeamService} from "../bet-team";
 
 
@@ -20,23 +19,18 @@ export class RankingComponent implements OnInit, OnDestroy {
     currentAccount: any;
     users: User[];
     betTeams: BetTeam[];
-    betTeam: BetTeam;
     error: any;
     success: any;
     routeData: any;
     links: any;
     linksTeam: any;
     totalItems: any;
-    totalItemsTeam: any;
     queryCount: any;
-    queryCountTeam: any;
     itemsPerPage: any;
     page: any;
     predicate: any;
-    predicateT: any;
     previousPage: any;
     reverse: any;
-    reverseT: any;
     public searchString: string;
     private subject: Subject<string> = new Subject();
 
@@ -50,14 +44,12 @@ export class RankingComponent implements OnInit, OnDestroy {
         private router: Router,
         private eventManager: JhiEventManager
     ) {
-        this.itemsPerPage = ITEMS_PER_PAGE;
+        this.itemsPerPage = 10 //ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
             this.previousPage = data['pagingParams'].page;
             this.reverse = data['pagingParams'].ascending;
             this.predicate = data['pagingParams'].predicate;
-            this.reverseT = data['pagingParams'].ascending;
-            this.predicateT = data['pagingParams'].predicate;
         });
     }
 
@@ -70,7 +62,7 @@ export class RankingComponent implements OnInit, OnDestroy {
         this.subject.debounceTime(500).subscribe(() => {
             this.loadAll();
         });
-        this.router.onSameUrlNavigation = 'reload';
+        // this.router.onSameUrlNavigation = 'reload';
     }
 
     onKeyUp(){
@@ -102,7 +94,6 @@ export class RankingComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-
         this.userService.queryRank({
                 page: this.page - 1,
                 size: this.itemsPerPage,
@@ -112,8 +103,8 @@ export class RankingComponent implements OnInit, OnDestroy {
             );
 
         this.betTeamService.query({
-            page: this.page - 1,
-            size: this.itemsPerPage,
+            page: 0,
+            size: 99,
             sort: this.sortTeam() }).subscribe(
             (res: HttpResponse<BetTeam[]>) => this.onSuccessTeam(res.body, res.headers),
             (res: HttpResponse<any>) => this.onError(res.body)
@@ -127,10 +118,12 @@ export class RankingComponent implements OnInit, OnDestroy {
     }
 
     sort() {
-        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-        if (this.predicate !== 'id') {
+        if (this.predicate === 'id')
+            this.predicate = 'rank'
+        let result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
+        /*if (this.predicate !== 'id') {
             result.push('id');
-        }
+        }*/
         return result;
     }
 
@@ -146,6 +139,7 @@ export class RankingComponent implements OnInit, OnDestroy {
     }
 
     transition() {
+
         this.router.navigate(['/ranking'], {
             queryParams: {
                 page: this.page,
@@ -153,16 +147,6 @@ export class RankingComponent implements OnInit, OnDestroy {
             }
         });
         this.loadAll();
-    }
-
-    transitionTeam(this, betTeam) {
-        this.router.navigate(['/ranking'], {
-            queryParams: {
-                page: this.page
-                /*sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')*/
-            }
-        });
-        this.sortMembersOfTeam( betTeam);
     }
 
     private onSuccess(data, headers) {
@@ -174,26 +158,13 @@ export class RankingComponent implements OnInit, OnDestroy {
 
     private onSuccessTeam(data, headers) {
         this.linksTeam = this.parseLinks.parse(headers.get('link'));
-        this.totalItemsTeam = headers.get('X-Total-Count');
-        this.queryCountTeam = this.totalItemsTeam;
+        //this.totalItemsTeam = headers.get('X-Total-Count');
+        //this.queryCountTeam = this.totalItemsTeam;
         this.betTeams = data;
     }
 
     private onError(error) {
         this.alertService.error(error.error, error.message, null);
-    }
-
-    sortMembersOfTeam( betTeam ){
-
-        const index = this.betTeams.indexOf(betTeam)
-
-        if (this.predicate == 'login')
-            this.betTeams[index].members.sort().reverse();
-         else if (this.predicate == 'rank')
-            this.betTeam.members.sort().reverse();
-        else
-            this.betTeams[index].members.sort((a, b) => (a.points - b.points));
-
     }
 
 }
