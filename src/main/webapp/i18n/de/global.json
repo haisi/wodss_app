@@ -8,9 +8,9 @@
             "entities": {
                 "main": "Entitäten",
                 "team": "Team",
-                "bet": "Bet",
-                "game": "Game",
-                "betTeam": "Bet Team",
+                "bet": "Tipp",
+                "game": "Spiel",
+                "betTeam": "Tipp Team",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
