@@ -5,7 +5,7 @@ import { JhiPaginationUtil } from 'ng-jhipster';
 
 import { RankingComponent } from './ranking.component';
 
-import { Principal } from '../../shared';
+import {Principal, UserRouteAccessService} from '../../shared';
 
 @Injectable()
 export class UserResolve implements CanActivate {
@@ -24,7 +24,7 @@ export class RankingResolvePagingParams implements Resolve<any> {
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const page = route.queryParams['page'] ? route.queryParams['page'] : '1';
-        const sort = route.queryParams['sort'] ? route.queryParams['sort'] : 'id,asc';
+        const sort = route.queryParams['sort'] ? route.queryParams['sort'] : 'rank,asc';
         return {
             page: this.paginationUtil.parsePage(page),
             predicate: this.paginationUtil.parsePredicate(sort),
@@ -41,7 +41,9 @@ export const rankingRoute: Routes = [
             'pagingParams': RankingResolvePagingParams
         },
         data: {
+            authorities: ['ROLE_USER'],
             pageTitle: 'userManagement.home.title'
-        }
+        },
+        canActivate: [UserRouteAccessService]
     }
 ];

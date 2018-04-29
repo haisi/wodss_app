@@ -45,6 +45,9 @@ export class RankingComponent implements OnInit, OnDestroy {
         private eventManager: JhiEventManager
     ) {
         this.itemsPerPage = 10 //ITEMS_PER_PAGE;
+        this.page = 1;
+        this.predicate = 'rank';
+        this.reverse = true;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
             this.previousPage = data['pagingParams'].page;
@@ -139,7 +142,6 @@ export class RankingComponent implements OnInit, OnDestroy {
     }
 
     transition() {
-
         this.router.navigate(['/ranking'], {
             queryParams: {
                 page: this.page,
@@ -165,6 +167,20 @@ export class RankingComponent implements OnInit, OnDestroy {
 
     private onError(error) {
         this.alertService.error(error.error, error.message, null);
+    }
+    /**
+     * Checks whether the logged in user is a member of the passed betTeam
+     *
+     * @param {BetTeam} betTeam
+     * @returns {boolean} true if user is member of the betTeam
+     */
+    isMember(betTeam: BetTeam) {
+        for (const member of betTeam.members) {
+            if (member.id === this.currentAccount.id) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
