@@ -3,7 +3,7 @@
     "betChampionApp": {
         "bet" : {
             "home": {
-                "title": "Tipps",
+                "title": "Meine Tipps",
                 "createLabel": "Tipp erstellen",
                 "createOrEditLabel": "Tipp erstellen oder bearbeiten"
             },

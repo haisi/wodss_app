@@ -3,7 +3,7 @@
     "betChampionApp": {
         "bet" : {
             "home": {
-                "title": "Bets",
+                "title": "My Bets",
                 "createLabel": "Create a new Bet",
                 "createOrEditLabel": "Create or edit a Bet"
             },
