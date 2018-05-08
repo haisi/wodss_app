@@ -3,15 +3,27 @@ package ch.fhnw.wodss.betchampion.service;
 import ch.fhnw.wodss.betchampion.domain.Bet;
 import ch.fhnw.wodss.betchampion.domain.Game;
 import ch.fhnw.wodss.betchampion.domain.Stats;
+import ch.fhnw.wodss.betchampion.domain.User;
 import ch.fhnw.wodss.betchampion.repository.BetRepository;
+import ch.fhnw.wodss.betchampion.repository.UserRepository;
+import ch.fhnw.wodss.betchampion.security.SecurityUtils;
+import ch.fhnw.wodss.betchampion.service.dto.BetDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -24,9 +36,66 @@ public class BetService {
     private final Logger log = LoggerFactory.getLogger(BetService.class);
 
     private final BetRepository betRepository;
+    private final UserRepository userRepository;
+    private final JdbcTemplate jdbcTemplate;
 
-    public BetService(BetRepository betRepository) {
+    public BetService(BetRepository betRepository, UserRepository userRepository, JdbcTemplate jdbcTemplate) {
         this.betRepository = betRepository;
+        this.userRepository = userRepository;
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    private final String BET_DTO_SQL = "SELECT\n" +
+        "  g.id as game_id,\n" +
+        "  g.match_time,\n" +
+        "  g.match_time < NOW() as closed,\n" +
+        "  g.goals_team_1, g.goals_team_2,\n" +
+        "  g.team1_id, g.team2_id,\n" +
+        "  b.id as bet_id,\n" +
+        "  b.goals_team_1 as bet_goal_team_1, b.goals_team_2 as bet_goal_team_2,\n" +
+        "  b.user_id as user_id\n" +
+        "FROM game AS g\n" +
+        "  LEFT JOIN bet b ON g.id = b.game_id\n" +
+        "HAVING b.user_id IS NULL OR b.user_id = ?;";
+
+    public List<BetDto> getAllBetsAndGamesOfUser() {
+
+        Optional<User> currentUser = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+        if (!currentUser.isPresent()) {
+            throw new UsernameNotFoundException("Have to be logged in!");
+        }
+
+        User user = currentUser.get();
+
+        return jdbcTemplate.query(BET_DTO_SQL, new Object[] {user.getId()}, new BetDtoMapper());
+    }
+
+    public class BetDtoMapper implements RowMapper<BetDto> {
+
+        @Override
+        public BetDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+            BetDto betDto = new BetDto();
+            betDto.setGameId(rs.getLong("game_id"));
+            ZonedDateTime matchTime = rs.getTimestamp("match_time").toLocalDateTime().atZone(ZoneOffset.UTC);
+            betDto.setMatchTime(matchTime);
+            betDto.setGameClosed(rs.getBoolean("closed"));
+
+            betDto.setGoalsTeam1(rs.getInt("goals_team_1"));
+            betDto.setGoalsTeam2(rs.getInt("goals_team_2"));
+
+            betDto.setTeam1Id(rs.getLong("team1_id"));
+            betDto.setTeam2Id(rs.getLong("team2_id"));
+
+            betDto.setBetId(rs.getLong("bet_id"));
+            betDto.setUserId(rs.getLong("user_id"));
+            betDto.setBetGoalTeam1(rs.getInt("bet_goal_team_1"));
+            betDto.setBetGoalTeam2(rs.getInt("bet_goal_team_2"));
+
+            Stats stats = getStats(betDto.getGameId());
+            betDto.setStats(stats);
+
+            return betDto;
+        }
     }
 
     /**
@@ -74,8 +143,17 @@ public class BetService {
         betRepository.delete(id);
     }
 
+    public Stats getStats(Long gameId){
+        List<Bet> bets = betRepository.findAllByGameId(gameId);
+        return calculateStats(bets);
+    }
+
     public Stats getStats(Game game){
         List<Bet> bets = betRepository.findAllByGame(game);
+        return calculateStats(bets);
+    }
+
+    private Stats calculateStats(List<Bet> bets) {
         int t1 = 0, t2 = 0, draw = 0;
         for(Bet b: bets){
             if(b.getGoalsTeam1().equals(b.getGoalsTeam2())){

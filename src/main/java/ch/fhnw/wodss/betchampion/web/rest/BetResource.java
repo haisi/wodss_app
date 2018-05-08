@@ -1,5 +1,6 @@
 package ch.fhnw.wodss.betchampion.web.rest;
 
+import ch.fhnw.wodss.betchampion.service.dto.BetDto;
 import com.codahale.metrics.annotation.Timed;
 import ch.fhnw.wodss.betchampion.domain.Bet;
 import ch.fhnw.wodss.betchampion.service.BetService;
@@ -80,6 +81,14 @@ public class BetResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, bet.getId().toString()))
             .body(result);
+    }
+
+    @GetMapping("/mybets")
+    @Timed
+    public ResponseEntity<List<BetDto>> getAllBetsAndGamesOfUser() {
+        log.debug("REST request to get all bets of current user");
+        List<BetDto> dtos = betService.getAllBetsAndGamesOfUser();
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
     /**
