@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { BetChampionSharedModule } from '../../shared';
 import { BetChampionAdminModule } from '../../admin/admin.module';
+import {InlineEditorModule} from '@qontu/ngx-inline-editor';
 import {
     BetService,
     BetPopupService,
@@ -26,7 +27,8 @@ const ENTITY_STATES = [
     imports: [
         BetChampionSharedModule,
         BetChampionAdminModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        InlineEditorModule
     ],
     declarations: [
         BetComponent,
