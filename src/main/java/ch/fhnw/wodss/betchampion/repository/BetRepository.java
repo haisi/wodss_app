@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Spring Data JPA repository for the Bet entity.
@@ -24,4 +25,5 @@ public interface BetRepository extends JpaRepository<Bet, Long> {
 
     List<Bet> findAllByGame(Game game);
     List<Bet> findAllByGameId(Long gameId);
+    Optional<Bet> findByGameIdAndUser(Long gameId, User user);
 }

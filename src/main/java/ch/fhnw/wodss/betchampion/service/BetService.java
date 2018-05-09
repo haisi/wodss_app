@@ -5,9 +5,11 @@ import ch.fhnw.wodss.betchampion.domain.Game;
 import ch.fhnw.wodss.betchampion.domain.Stats;
 import ch.fhnw.wodss.betchampion.domain.User;
 import ch.fhnw.wodss.betchampion.repository.BetRepository;
+import ch.fhnw.wodss.betchampion.repository.GameRepository;
 import ch.fhnw.wodss.betchampion.repository.UserRepository;
 import ch.fhnw.wodss.betchampion.security.SecurityUtils;
 import ch.fhnw.wodss.betchampion.service.dto.BetDto;
+import ch.fhnw.wodss.betchampion.service.dto.UpsertBetDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -37,11 +39,13 @@ public class BetService {
 
     private final BetRepository betRepository;
     private final UserRepository userRepository;
+    private final GameRepository gameRepository;
     private final JdbcTemplate jdbcTemplate;
 
-    public BetService(BetRepository betRepository, UserRepository userRepository, JdbcTemplate jdbcTemplate) {
+    public BetService(BetRepository betRepository, UserRepository userRepository, GameRepository gameRepository, JdbcTemplate jdbcTemplate) {
         this.betRepository = betRepository;
         this.userRepository = userRepository;
+        this.gameRepository = gameRepository;
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -62,6 +66,8 @@ public class BetService {
         "HAVING b.user_id IS NULL OR b.user_id = ?\n" +
         "ORDER BY g.match_time ASC";
 
+    private final String GAME_CLOSED_SQL = "SELECT g.match_time < NOW() as closed FROM game as g WHERE g.id = ?;";
+
     public List<BetDto> getAllBetsAndGamesOfUser() {
 
         Optional<User> currentUser = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
@@ -72,6 +78,39 @@ public class BetService {
         User user = currentUser.get();
 
         return jdbcTemplate.query(BET_DTO_SQL, new Object[] {user.getId()}, new BetDtoMapper());
+    }
+
+    public Bet upsertBet(UpsertBetDto dto) {
+        Optional<User> currentUser = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+        if (!currentUser.isPresent()) {
+            throw new UsernameNotFoundException("Have to be logged in!");
+        }
+
+        User user = currentUser.get();
+
+        Game game = gameRepository.getOne(dto.getGameId());
+        if (game == null) {
+            throw new RuntimeException("Game doesn't exist!");
+        }
+
+        Boolean closed = jdbcTemplate.queryForObject(GAME_CLOSED_SQL, new Object[]{dto.getGameId()}, Boolean.class);
+        if (closed == null || closed) {
+            throw new RuntimeException("Game already closed!");
+        }
+
+        Optional<Bet> optionalBet = betRepository.findByGameIdAndUser(dto.getGameId(), user);
+        Bet bet;
+        if (optionalBet.isPresent()) {
+            bet = optionalBet.get();
+        } else {
+            bet = new Bet();
+            bet.setUser(user);
+            bet.setGame(game);
+        }
+
+        bet.setGoalsTeam1(dto.getBetGoalTeam1());
+        bet.setGoalsTeam2(dto.getBetGoalTeam2());
+        return betRepository.save(bet);
     }
 
     public class BetDtoMapper implements RowMapper<BetDto> {

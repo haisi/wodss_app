@@ -1,6 +1,7 @@
 package ch.fhnw.wodss.betchampion.web.rest;
 
 import ch.fhnw.wodss.betchampion.service.dto.BetDto;
+import ch.fhnw.wodss.betchampion.service.dto.UpsertBetDto;
 import com.codahale.metrics.annotation.Timed;
 import ch.fhnw.wodss.betchampion.domain.Bet;
 import ch.fhnw.wodss.betchampion.service.BetService;
@@ -39,6 +40,13 @@ public class BetResource {
 
     public BetResource(BetService betService) {
         this.betService = betService;
+    }
+
+
+    @PostMapping("/foo")
+    public Bet upsert(UpsertBetDto dto) {
+        log.debug("REST request to upsert Bet : {}", dto);
+        return betService.upsertBet(dto);
     }
 
     /**

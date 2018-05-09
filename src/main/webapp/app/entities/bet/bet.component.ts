@@ -52,13 +52,16 @@ export class BetComponent implements OnInit, OnDestroy {
         });
     }
 
-    save(bet: Betgame) {
-        console.log('pressed save: ' + bet)
+    save(betgame: Betgame) {
+        this.betService.upsert(betgame).subscribe(
+            (res: HttpResponse<Bet>) => this.onSaveSuccess(res.body),
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
     }
 
     loadAll() {
         this.betService.getAllBetsAndGames().subscribe(
-            (res: HttpResponse<Bet[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpResponse<Betgame[]>) => this.onSuccess(res.body, res.headers),
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
@@ -102,6 +105,10 @@ export class BetComponent implements OnInit, OnDestroy {
     }
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
+    }
+
+    private onSaveSuccess(result: Betgame) {
+        this.eventManager.broadcast({ name: 'betListModification', content: 'OK'});
     }
 
 }
