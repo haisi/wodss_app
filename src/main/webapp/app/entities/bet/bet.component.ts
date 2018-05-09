@@ -52,6 +52,10 @@ export class BetComponent implements OnInit, OnDestroy {
         });
     }
 
+    save(bet: Betgame) {
+        console.log('pressed save: ' + bet)
+    }
+
     loadAll() {
         this.betService.getAllBetsAndGames().subscribe(
             (res: HttpResponse<Bet[]>) => this.onSuccess(res.body, res.headers),
