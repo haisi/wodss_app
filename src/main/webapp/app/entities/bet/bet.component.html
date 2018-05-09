@@ -28,9 +28,14 @@
                 <td>{{bet.matchTime | date:'medium'}}</td>
                 <td><b>{{bet.goalsTeam1 || "-"}} : {{bet.goalsTeam2 || "-"}}</b></td>
                 <td>{{bet.team1Name}}</td>
-                <td>
+
+                <td *ngIf="!bet.gameClosed; else givenGoal1">
                     <inline-editor type="number" [(ngModel)]="bet.betGoalTeam1" (onSave)="save(bet)" name="editableText1" size="8"></inline-editor>
                 </td>
+                <ng-template #givenGoal1>
+                    <td>{{bet.betGoalTeam1 || "-"}}</td>
+                </ng-template>
+
                 <td>
                     <div class="progress">
                         <div class="progress-bar" role="progressbar"  [style.width.%]="bet.stats.winTeam1" aria-valuemin="0" aria-valuemax="100">{{bet.stats.winTeam1==0?'':bet.stats.winTeam1+'%'}}</div>
@@ -38,9 +43,14 @@
                         <div class="progress-bar bg-info" role="progressbar"  [style.width.%]="bet.stats.winTeam2" aria-valuemin="0" aria-valuemax="100">{{bet.stats.winTeam2==0?'':bet.stats.winTeam2+'%'}}</div>
                     </div>
                 </td>
-                <td>
+
+                <td *ngIf="!bet.gameClosed; else givenGoal2">
                     <inline-editor type="number" [(ngModel)]="bet.betGoalTeam2" (onSave)="save(bet)" name="editableText2" size="8"></inline-editor>
                 </td>
+                <ng-template #givenGoal2>
+                    <td>{{bet.betGoalTeam2 || "-"}}</td>
+                </ng-template>
+
                 <td>{{bet.team2Name}}</td>
             </tr>
             </tbody>
