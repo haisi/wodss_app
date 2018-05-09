@@ -27,15 +27,13 @@ public class BetDto {
     @NotEmpty
     private String team2Name;
 
-    @Min(0)
-    private int goalsTeam1;
-    @Min(0)
-    private int goalsTeam2;
+    private Integer goalsTeam1;
+    private Integer goalsTeam2;
 
-    private long betId;
-    private long userId;
-    private int betGoalTeam1;
-    private int betGoalTeam2;
+    private Long betId;
+    private Long userId;
+    private Integer betGoalTeam1;
+    private Integer betGoalTeam2;
     private Stats stats;
 
     public BetDto() {}
@@ -96,51 +94,51 @@ public class BetDto {
         this.team2Name = team2Name;
     }
 
-    public int getGoalsTeam1() {
+    public Integer getGoalsTeam1() {
         return goalsTeam1;
     }
 
-    public void setGoalsTeam1(int goalsTeam1) {
+    public void setGoalsTeam1(Integer goalsTeam1) {
         this.goalsTeam1 = goalsTeam1;
     }
 
-    public int getGoalsTeam2() {
+    public Integer getGoalsTeam2() {
         return goalsTeam2;
     }
 
-    public void setGoalsTeam2(int goalsTeam2) {
+    public void setGoalsTeam2(Integer goalsTeam2) {
         this.goalsTeam2 = goalsTeam2;
     }
 
-    public long getBetId() {
+    public Long getBetId() {
         return betId;
     }
 
-    public void setBetId(long betId) {
+    public void setBetId(Long betId) {
         this.betId = betId;
     }
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public int getBetGoalTeam1() {
+    public Integer getBetGoalTeam1() {
         return betGoalTeam1;
     }
 
-    public void setBetGoalTeam1(int betGoalTeam1) {
+    public void setBetGoalTeam1(Integer betGoalTeam1) {
         this.betGoalTeam1 = betGoalTeam1;
     }
 
-    public int getBetGoalTeam2() {
+    public Integer getBetGoalTeam2() {
         return betGoalTeam2;
     }
 
-    public void setBetGoalTeam2(int betGoalTeam2) {
+    public void setBetGoalTeam2(Integer betGoalTeam2) {
         this.betGoalTeam2 = betGoalTeam2;
     }
 

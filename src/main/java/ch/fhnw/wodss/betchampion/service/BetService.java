@@ -85,7 +85,9 @@ public class BetService {
             betDto.setGameClosed(rs.getBoolean("closed"));
 
             betDto.setGoalsTeam1(rs.getInt("goals_team_1"));
+            if (rs.wasNull()) betDto.setGoalsTeam1(null);
             betDto.setGoalsTeam2(rs.getInt("goals_team_2"));
+            if (rs.wasNull()) betDto.setGoalsTeam2(null);
 
             betDto.setTeam1Id(rs.getLong("team1_id"));
             betDto.setTeam1Name(rs.getString("team1_name"));
@@ -93,9 +95,14 @@ public class BetService {
             betDto.setTeam2Name(rs.getString("team2_name"));
 
             betDto.setBetId(rs.getLong("bet_id"));
+            if (rs.wasNull()) betDto.setBetId(null);
             betDto.setUserId(rs.getLong("user_id"));
+            if (rs.wasNull()) betDto.setUserId(null);
+
             betDto.setBetGoalTeam1(rs.getInt("bet_goal_team_1"));
+            if (rs.wasNull()) betDto.setBetGoalTeam1(null);
             betDto.setBetGoalTeam2(rs.getInt("bet_goal_team_2"));
+            if (rs.wasNull()) betDto.setBetGoalTeam2(null);
 
             Stats stats = getStats(betDto.getGameId());
             betDto.setStats(stats);
