@@ -36,7 +36,7 @@
                     </div>
                 </td>
                 <td>
-                    <inline-editor type="text" [(ngModel)]="game.goalsTeam1" (onSave)="save(game)" name="editableText1" size="8"></inline-editor>
+                    <inline-editor type="number" [(ngModel)]="game.goalsTeam1" (onSave)="save(game)" name="editableText1" size="8"></inline-editor>
                 </td>
 
                 <td>
@@ -47,7 +47,7 @@
                     </div>
                 </td>
                 <td>
-                    <inline-editor type="text" [(ngModel)]="game.goalsTeam2" (onSave)="save(game)" name="editableText1" size="8"></inline-editor>
+                    <inline-editor type="number" [(ngModel)]="game.goalsTeam2" (onSave)="save(game)" name="editableText1" size="8"></inline-editor>
                 </td>
                 <td>
                     <div *ngIf="game.team2">
