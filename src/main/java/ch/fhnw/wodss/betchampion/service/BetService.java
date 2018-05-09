@@ -46,17 +46,21 @@ public class BetService {
     }
 
     private final String BET_DTO_SQL = "SELECT\n" +
-        "  g.id as game_id,\n" +
+        "  g.id AS game_id,\n" +
         "  g.match_time,\n" +
-        "  g.match_time < NOW() as closed,\n" +
+        "  g.match_time < NOW() AS closed,\n" +
         "  g.goals_team_1, g.goals_team_2,\n" +
         "  g.team1_id, g.team2_id,\n" +
-        "  b.id as bet_id,\n" +
-        "  b.goals_team_1 as bet_goal_team_1, b.goals_team_2 as bet_goal_team_2,\n" +
-        "  b.user_id as user_id\n" +
+        "  t1.team_name AS team1_name, t2.team_name AS team2_name,\n" +
+        "  b.id AS bet_id,\n" +
+        "  b.goals_team_1 AS bet_goal_team_1, b.goals_team_2 AS bet_goal_team_2,\n" +
+        "  b.user_id AS user_id\n" +
         "FROM game AS g\n" +
         "  LEFT JOIN bet b ON g.id = b.game_id\n" +
-        "HAVING b.user_id IS NULL OR b.user_id = ?;";
+        "  INNER JOIN team t1 ON g.team1_id = t1.id\n" +
+        "  INNER JOIN team t2 ON g.team2_id = t2.id\n" +
+        "HAVING b.user_id IS NULL OR b.user_id = ?\n" +
+        "ORDER BY g.match_time ASC";
 
     public List<BetDto> getAllBetsAndGamesOfUser() {
 
@@ -84,7 +88,9 @@ public class BetService {
             betDto.setGoalsTeam2(rs.getInt("goals_team_2"));
 
             betDto.setTeam1Id(rs.getLong("team1_id"));
+            betDto.setTeam1Name(rs.getString("team1_name"));
             betDto.setTeam2Id(rs.getLong("team2_id"));
+            betDto.setTeam2Name(rs.getString("team2_name"));
 
             betDto.setBetId(rs.getLong("bet_id"));
             betDto.setUserId(rs.getLong("user_id"));

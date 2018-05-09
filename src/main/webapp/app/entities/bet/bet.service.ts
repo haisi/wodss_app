@@ -5,6 +5,7 @@ import { SERVER_API_URL } from '../../app.constants';
 
 import { Bet } from './bet.model';
 import { createRequestOption } from '../../shared';
+import {Betgame} from "./betgame.model";
 
 export type EntityResponseType = HttpResponse<Bet>;
 
@@ -32,6 +33,11 @@ export class BetService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
+    getAllBetsAndGames(): Observable<HttpResponse<Betgame[]>> {
+        return this.http.get<Betgame[]>('api/mybets', { observe: 'response' })
+            .map((res: HttpResponse<Betgame[]>) => this.convertBetgameArrayResponse(res));
+    }
+
     query(req?: any): Observable<HttpResponse<Bet[]>> {
         const options = createRequestOption(req);
         return this.http.get<Bet[]>(this.resourceUrl, { params: options, observe: 'response' })
@@ -56,6 +62,16 @@ export class BetService {
         return res.clone({body});
     }
 
+    private convertBetgameArrayResponse(res: HttpResponse<Betgame[]>): HttpResponse<Betgame[]> {
+        const jsonResponse: Betgame[] = res.body;
+        const body: Betgame[] = [];
+        for (let i = 0; i < jsonResponse.length; i++) {
+            body.push(this.convertBetgameItemFromServer(jsonResponse[i]));
+        }
+        return res.clone({body});
+    }
+
+
     /**
      * Convert a returned JSON object to Bet.
      */
@@ -63,6 +79,15 @@ export class BetService {
         const copy: Bet = Object.assign({}, bet);
         return copy;
     }
+
+    /**
+     * Convert a returned JSON object to Bet.
+     */
+    private convertBetgameItemFromServer(bet: Betgame): Betgame {
+        const copy: Betgame = Object.assign({}, bet);
+        return copy;
+    }
+
 
     /**
      * Convert a Bet to a JSON which can be sent to the server.

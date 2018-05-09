@@ -7,7 +7,8 @@ import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 import { Bet } from './bet.model';
 import { BetService } from './bet.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
-import {Game, GameService} from "../game";
+import { Game, GameService } from '../game';
+import { Betgame } from './betgame.model';
 
 @Component({
     selector: 'jhi-bet',
@@ -16,7 +17,7 @@ import {Game, GameService} from "../game";
 export class BetComponent implements OnInit, OnDestroy {
 
     currentAccount: any;
-    bets: Bet[];
+    bets: Betgame[];
     error: any;
     success: any;
     eventSubscriber: Subscription;
@@ -29,9 +30,7 @@ export class BetComponent implements OnInit, OnDestroy {
     predicate: any;
     previousPage: any;
     reverse: any;
-    isCreator: boolean;
     games: Game[];
-    userBets: Bet[];
     size: number;
 
     constructor(
@@ -54,12 +53,9 @@ export class BetComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        this.betService.query({
-            page: this.page - 1,
-            size: 999, // get it all!!!
-            sort: this.sort()}).subscribe(
-                (res: HttpResponse<Bet[]>) => this.onSuccess(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message)
+        this.betService.getAllBetsAndGames().subscribe(
+            (res: HttpResponse<Bet[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
     loadPage(page: number) {
@@ -69,22 +65,12 @@ export class BetComponent implements OnInit, OnDestroy {
         }
     }
     transition() {
-        this.router.navigate(['/bet'], {queryParams:
-            {
-                page: this.page,
-                size: 999,
-                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            }
-        });
+        this.router.navigate(['/bet']);
         this.loadAll();
     }
 
     clear() {
-        this.page = 0;
-        this.router.navigate(['/bet', {
-            page: this.page,
-            sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-        }]);
+        this.router.navigate(['/bet']);
         this.loadAll();
     }
     ngOnInit() {
@@ -106,43 +92,12 @@ export class BetComponent implements OnInit, OnDestroy {
         this.eventSubscriber = this.eventManager.subscribe('betListModification', (response) => this.loadAll());
     }
 
-    sort() {
-        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-        if (this.predicate !== 'id') {
-            result.push('id');
-        }
-        return result;
-    }
-
     private onSuccess(data, headers) {
-        this.links = this.parseLinks.parse(headers.get('link'));
-        this.totalItems = headers.get('X-Total-Count');
-        this.queryCount = this.totalItems;
-        // this.page = pagingParams.page;
+        // this.links = this.parseLinks.parse(headers.get('link'));
         this.bets = data;
-        this.loadGames();
-        this.filterBets();
     }
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
-    }
-
-    isUser(bet: Bet) {
-        if (bet.user.id === this.currentAccount.id) {
-            this.isCreator = true;
-            return true;
-        }
-        this.isCreator = false;
-        return false;
-    }
-
-    loadGames(){
-        this.gameService.query().subscribe(y => this.games = y.body);
-    }
-
-    filterBets(){
-        this.userBets = this.bets;
-        this.userBets = this.userBets.filter(x => x.user.id === this.currentAccount.id)
     }
 
 }

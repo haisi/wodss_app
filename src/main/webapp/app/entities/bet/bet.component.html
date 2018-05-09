@@ -10,63 +10,37 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="goalsTeam1"><span jhiTranslate="betChampionApp.bet.goalsTeam1">Goals Team 1</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="goalsTeam2"><span jhiTranslate="betChampionApp.bet.goalsTeam2">Goals Team 2</span> <span class="fa fa-sort"></span></th>
-            <!--<th jhiSortBy="user.login"><span jhiTranslate="betChampionApp.bet.user">User</span> <span class="fa fa-sort"></span></th>-->
-            <th jhiSortBy="game.id"><span jhiTranslate="betChampionApp.bet.game">Game</span> <span class="fa fa-sort"></span></th>
-            <th></th>
+                <th jhiSortBy="matchTime"><span jhiTranslate="betChampionApp.game.matchTime">Match Time</span> <span
+                    class="fa fa-sort"></span></th>
+                <th jhiSortBy="team1.teamName"><span jhiTranslate="betChampionApp.game.team1">Team 1</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="goalsTeam1"><span jhiTranslate="betChampionApp.game.goalsTeam1">Goals Team 1</span> <span class="fa fa-sort"></span></th>
+                <th width="30%"><span>Stats</span></th>
+                <th jhiSortBy="goalsTeam2"><span jhiTranslate="betChampionApp.game.goalsTeam2">Goals Team 2</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="team2.teamName"><span jhiTranslate="betChampionApp.game.team2">Team 2</span> <span class="fa fa-sort"></span></th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let bet of userBets ;trackBy: trackId">
-                <td><a [routerLink]="['../bet', bet.id ]">{{bet.id}}</a></td>
+            <tr *ngFor="let bet of userBets">
+                <td>{{bet.matchTime | date:'medium'}}</td>
+                <td>{{bet.team1Name}}</td>
                 <td>{{bet.goalsTeam1}}</td>
+                <td>
+                    <inline-editor type="number" [(ngModel)]="bet.betGoalsTeam1" (onSave)="save(game)" name="editableText1" size="8"></inline-editor>
+                </td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar"  [style.width.%]="bet.stats.team1Won" aria-valuemin="0" aria-valuemax="100">{{bet.stats.team1Won==0?'':bet.stats.team1Won+'%'}}</div>
+                        <div class="progress-bar bg-success" role="progressbar"  [style.width.%]="bet.stats.draw" aria-valuemin="0" aria-valuemax="100">{{bet.stats.draw==0?'':bet.stats.draw+'%'}}</div>
+                        <div class="progress-bar bg-info" role="progressbar"  [style.width.%]="bet.stats.team2Won" aria-valuemin="0" aria-valuemax="100">{{bet.stats.team2Won==0?'':bet.stats.team2Won+'%'}}</div>
+                    </div>
+                </td>
+                <td>
+                    <inline-editor type="number" [(ngModel)]="bet.betGoalsTeam2" (onSave)="save(game)" name="editableText1" size="8"></inline-editor>
+                </td>
                 <td>{{bet.goalsTeam2}}</td>
-                <!--<td>
-                    {{bet.user?.login}}
-                </td>-->
-                <td *ngIf="games">
-                    <div *ngIf="bet.game">
-                        <a [routerLink]="['../game', bet.game?.id ]">{{bet.game.id}}: {{games[bet.game.id - 1].team1.teamName }} - {{games[bet.game.id -1 ].team2.teamName }}</a>
-                    </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['../bet', bet.id ]"
-                                class="btn btn-info btn-sm">
-                            <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'bet/'+ bet.id + '/edit'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'bet/'+ bet.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
-                    </div>
-                </td>
+                <td>{{bet.team2Name}}</td>
             </tr>
             </tbody>
         </table>
-    </div>
-    <div *ngIf="userBets">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="userBets.length" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="userBets.length" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
-        </div>
     </div>
 </div>

@@ -1,6 +1,7 @@
 package ch.fhnw.wodss.betchampion.service.dto;
 
 import ch.fhnw.wodss.betchampion.domain.Stats;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -19,8 +20,12 @@ public class BetDto {
 
     @NotNull
     private long team1Id;
+    @NotEmpty
+    private String team1Name;
     @NotNull
     private long team2Id;
+    @NotEmpty
+    private String team2Name;
 
     @Min(0)
     private int goalsTeam1;
@@ -67,12 +72,28 @@ public class BetDto {
         this.team1Id = team1Id;
     }
 
+    public String getTeam1Name() {
+        return team1Name;
+    }
+
+    public void setTeam1Name(String team1Name) {
+        this.team1Name = team1Name;
+    }
+
     public long getTeam2Id() {
         return team2Id;
     }
 
     public void setTeam2Id(long team2Id) {
         this.team2Id = team2Id;
+    }
+
+    public String getTeam2Name() {
+        return team2Name;
+    }
+
+    public void setTeam2Name(String team2Name) {
+        this.team2Name = team2Name;
     }
 
     public int getGoalsTeam1() {
@@ -172,8 +193,8 @@ public class BetDto {
         return "BetDto{" +
             "gameId=" + gameId +
             ", gameClosed=" + gameClosed +
-            ", team1Id=" + team1Id +
-            ", team2Id=" + team2Id +
+            ", team1Name=" + team1Name +
+            ", team2Name=" + team2Name +
             ", goalsTeam1=" + goalsTeam1 +
             ", goalsTeam2=" + goalsTeam2 +
             ", userId=" + userId +
