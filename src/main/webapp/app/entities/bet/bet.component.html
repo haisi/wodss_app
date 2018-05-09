@@ -26,7 +26,7 @@
             <tbody>
             <tr *ngFor="let bet of bets;">
                 <td>{{bet.matchTime | date:'medium'}}</td>
-                <td><b>{{bet.goalsTeam1}} : {{bet.goalsTeam2}}</b></td>
+                <td><b>{{bet.goalsTeam1 || "-"}} : {{bet.goalsTeam2 || "-"}}</b></td>
                 <td>{{bet.team1Name}}</td>
                 <td>
                     <inline-editor type="number" [(ngModel)]="bet.betGoalTeam1" (onSave)="save(bet)" name="editableText1" size="8"></inline-editor>
