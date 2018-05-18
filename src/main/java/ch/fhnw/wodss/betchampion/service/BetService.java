@@ -60,11 +60,10 @@ public class BetService {
         "  b.goals_team_1 AS bet_goal_team_1, b.goals_team_2 AS bet_goal_team_2,\n" +
         "  b.user_id AS user_id\n" +
         "FROM game AS g\n" +
-        "  LEFT JOIN bet b ON g.id = b.game_id\n" +
+        "  LEFT JOIN bet b ON g.id = b.game_id AND b.user_id = ?\n" +
         "  INNER JOIN team t1 ON g.team1_id = t1.id\n" +
         "  INNER JOIN team t2 ON g.team2_id = t2.id\n" +
-        "HAVING b.user_id IS NULL OR b.user_id = ?\n" +
-        "ORDER BY g.match_time ASC";
+        "ORDER BY g.match_time ASC;";
 
     private final String GAME_CLOSED_SQL = "SELECT g.match_time < NOW() as closed FROM game as g WHERE g.id = ?;";
 
