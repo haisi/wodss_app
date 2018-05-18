@@ -17,16 +17,9 @@ export class BetService {
     constructor(private http: HttpClient) { }
 
     upsert(betgame: Betgame): Observable<EntityResponseType> {
-        const copy = {
-            "gameId": betgame.gameId,
-            "betGoalTeam1": betgame.betGoalTeam1,
-            "betGoalTeam2": betgame.betGoalTeam2,
-        };
+        const copy = Object.assign({}, betgame);
 
-        console.log(copy);
-        debugger;
-
-        return this.http.post<Bet>('api/foo', copy, { observe: 'response' })
+        return this.http.post<Bet>('api/upsert', copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 

@@ -43,8 +43,8 @@ public class BetResource {
     }
 
 
-    @PostMapping("/foo")
-    public Bet upsert(UpsertBetDto dto) {
+    @PostMapping("/upsert")
+    public Bet upsert(@Valid @RequestBody UpsertBetDto dto) {
         log.debug("REST request to upsert Bet : {}", dto);
         return betService.upsertBet(dto);
     }

@@ -108,8 +108,8 @@ public class BetService {
             bet.setGame(game);
         }
 
-        bet.setGoalsTeam1(dto.getBetGoalTeam1());
-        bet.setGoalsTeam2(dto.getBetGoalTeam2());
+        bet.setGoalsTeam1(dto.getBetGoalTeam1() != null ? dto.getBetGoalTeam1() : 0);
+        bet.setGoalsTeam2(dto.getBetGoalTeam2() != null ? dto.getBetGoalTeam2() : 0);
         return betRepository.save(bet);
     }
 
