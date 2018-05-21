@@ -1,0 +1,23 @@
+
+{
+    "betChampionApp": {
+        "betTeam" : {
+            "home": {
+                "title": "Bet Teams",
+                "createLabel": "Bet Team erstellen",
+                "createOrEditLabel": "Bet Team erstellen oder bearbeiten"
+            },
+            "created": "Bet Team erstellt mit ID {{ param }}",
+            "updated": "Bet Team aktualisiert mit ID {{ param }}",
+            "deleted": "Bet Team gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Bet Team {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Bet Team"
+            },
+            "betTeamName": "Bet Team Name",
+            "members": "Members"
+        }
+    }
+}

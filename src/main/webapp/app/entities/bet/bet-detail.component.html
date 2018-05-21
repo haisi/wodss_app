@@ -1,0 +1,40 @@
+
+<div *ngIf="bet">
+    <h2><span jhiTranslate="betChampionApp.bet.detail.title">Bet</span> {{bet.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="betChampionApp.bet.goalsTeam1">Goals Team 1</span></dt>
+        <dd>
+            <span>{{bet.goalsTeam1}}</span>
+        </dd>
+        <dt><span jhiTranslate="betChampionApp.bet.goalsTeam2">Goals Team 2</span></dt>
+        <dd>
+            <span>{{bet.goalsTeam2}}</span>
+        </dd>
+        <dt><span jhiTranslate="betChampionApp.bet.user">User</span></dt>
+        <dd>
+            {{bet.user?.login}}
+        </dd>
+        <dt><span jhiTranslate="betChampionApp.bet.game">Game</span></dt>
+        <dd>
+            <div *ngIf="bet.game">
+                <a [routerLink]="['/game', bet.game?.id]">{{bet.game?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'bet/'+ bet.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

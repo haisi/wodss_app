@@ -1,0 +1,78 @@
+<div>
+    <h2>
+        <span jhiTranslate="betChampionApp.bet.home.title">Bets</span>
+        <button class="btn btn-primary float-right jh-create-entity create-bet" [routerLink]="['/', { outlets: { popup: ['bet-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="betChampionApp.bet.home.createLabel">
+            Create new Bet
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="bets">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="goalsTeam1"><span jhiTranslate="betChampionApp.bet.goalsTeam1">Goals Team 1</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="goalsTeam2"><span jhiTranslate="betChampionApp.bet.goalsTeam2">Goals Team 2</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="user.login"><span jhiTranslate="betChampionApp.bet.user">User</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="game.id"><span jhiTranslate="betChampionApp.bet.game">Game</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let bet of bets ;trackBy: trackId">
+                <td><a [routerLink]="['../bet', bet.id ]">{{bet.id}}</a></td>
+                <td>{{bet.goalsTeam1}}</td>
+                <td>{{bet.goalsTeam2}}</td>
+                <td>
+                    {{bet.user?.login}}
+                </td>
+                <td>
+                    <div *ngIf="bet.game">
+                        <a [routerLink]="['../game', bet.game?.id ]" >{{bet.game?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../bet', bet.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'bet/'+ bet.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'bet/'+ bet.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="bets && bets.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>
