@@ -18,6 +18,7 @@ export class Betgame implements BaseEntity {
         public betGoalTeam1?: number,
         public betGoalTeam2?: number,
         public stats?: any,
+        public info?: string,
     ) {
     }
 }

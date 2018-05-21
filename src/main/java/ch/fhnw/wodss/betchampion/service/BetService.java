@@ -58,7 +58,8 @@ public class BetService {
         "  t1.team_name AS team1_name, t2.team_name AS team2_name,\n" +
         "  b.id AS bet_id,\n" +
         "  b.goals_team_1 AS bet_goal_team_1, b.goals_team_2 AS bet_goal_team_2,\n" +
-        "  b.user_id AS user_id\n" +
+        "  b.user_id AS user_id,\n" +
+        "  g.info AS info\n" +
         "FROM game AS g\n" +
         "  LEFT JOIN bet b ON g.id = b.game_id AND b.user_id = ?\n" +
         "  INNER JOIN team t1 ON g.team1_id = t1.id\n" +
@@ -144,6 +145,7 @@ public class BetService {
 
             Stats stats = getStats(betDto.getGameId());
             betDto.setStats(stats);
+            betDto.setInfo(rs.getString("info"));
 
             return betDto;
         }

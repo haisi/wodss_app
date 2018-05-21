@@ -10,6 +10,7 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                <th><span jhiTranslate="global.field.info">Match</span></th>
                 <th><span jhiTranslate="betChampionApp.game.matchTime">Match Time</span></th>
 
                 <th><span>Result</span></th>
@@ -25,6 +26,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let bet of bets;">
+                <td>{{bet.info}}</td>
                 <td>{{bet.matchTime | date:'medium'}}</td>
                 <td><b>{{bet.goalsTeam1 || "-"}} : {{bet.goalsTeam2 || "-"}}</b></td>
                 <td>{{bet.team1Name}}</td>

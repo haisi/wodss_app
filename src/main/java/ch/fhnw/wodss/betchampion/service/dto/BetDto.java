@@ -35,6 +35,7 @@ public class BetDto {
     private Integer betGoalTeam1;
     private Integer betGoalTeam2;
     private Stats stats;
+    private String info;
 
     public BetDto() {}
 
@@ -150,6 +151,14 @@ public class BetDto {
         this.stats = stats;
     }
 
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -159,45 +168,42 @@ public class BetDto {
             gameClosed == betDto.gameClosed &&
             team1Id == betDto.team1Id &&
             team2Id == betDto.team2Id &&
-            goalsTeam1 == betDto.goalsTeam1 &&
-            goalsTeam2 == betDto.goalsTeam2 &&
-            betId == betDto.betId &&
-            userId == betDto.userId &&
-            betGoalTeam1 == betDto.betGoalTeam1 &&
-            betGoalTeam2 == betDto.betGoalTeam2 &&
             Objects.equals(matchTime, betDto.matchTime) &&
-            Objects.equals(stats, betDto.stats);
+            Objects.equals(team1Name, betDto.team1Name) &&
+            Objects.equals(team2Name, betDto.team2Name) &&
+            Objects.equals(goalsTeam1, betDto.goalsTeam1) &&
+            Objects.equals(goalsTeam2, betDto.goalsTeam2) &&
+            Objects.equals(betId, betDto.betId) &&
+            Objects.equals(userId, betDto.userId) &&
+            Objects.equals(betGoalTeam1, betDto.betGoalTeam1) &&
+            Objects.equals(betGoalTeam2, betDto.betGoalTeam2) &&
+            Objects.equals(stats, betDto.stats) &&
+            Objects.equals(info, betDto.info);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(gameId,
-            matchTime,
-            gameClosed,
-            team1Id,
-            team2Id,
-            goalsTeam1,
-            goalsTeam2,
-            betId,
-            userId,
-            betGoalTeam1,
-            betGoalTeam2,
-            stats);
+        return Objects.hash(gameId, matchTime, gameClosed, team1Id, team1Name, team2Id, team2Name, goalsTeam1, goalsTeam2, betId, userId, betGoalTeam1, betGoalTeam2, stats, info);
     }
 
     @Override
     public String toString() {
         return "BetDto{" +
             "gameId=" + gameId +
+            ", matchTime=" + matchTime +
             ", gameClosed=" + gameClosed +
-            ", team1Name=" + team1Name +
-            ", team2Name=" + team2Name +
+            ", team1Id=" + team1Id +
+            ", team1Name='" + team1Name + '\'' +
+            ", team2Id=" + team2Id +
+            ", team2Name='" + team2Name + '\'' +
             ", goalsTeam1=" + goalsTeam1 +
             ", goalsTeam2=" + goalsTeam2 +
+            ", betId=" + betId +
             ", userId=" + userId +
             ", betGoalTeam1=" + betGoalTeam1 +
             ", betGoalTeam2=" + betGoalTeam2 +
+            ", stats=" + stats +
+            ", info='" + info + '\'' +
             '}';
     }
 }
