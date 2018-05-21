@@ -12,7 +12,7 @@ import {User} from "../shared";
 export class BetTeamMembersComponent implements OnInit {
     @Input()
     private betTeamId: number;
-    private betTeam: BetTeam;
+    betTeam: BetTeam;
     private sortorder: any;
     private ranking: any;
     itemsPerPage: any;
