@@ -33,9 +33,9 @@ export class GameDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        var options = {page: 0, size: 40, sort: ['teamName,asc']};
+        const options = {page: 0, size: 40, sort: ['teamName,asc']};
         this.teamService.query(options)
-            .subscribe((res: HttpResponse<Team[]>) => { this.teams = res.body; console.log('+++++'+this.teams)}, (res: HttpErrorResponse) => this.onError(res.message));
+            .subscribe((res: HttpResponse<Team[]>) => { this.teams = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {

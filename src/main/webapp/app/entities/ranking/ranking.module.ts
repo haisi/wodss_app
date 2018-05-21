@@ -4,10 +4,10 @@ import { RouterModule } from '@angular/router';
 import { BetChampionSharedModule } from '../../shared';
 import { BetChampionAdminModule } from '../../admin/admin.module';
 
-import {RankingComponent} from "./ranking.component";
-import {RankingResolvePagingParams, rankingRoute} from "./ranking.route";
-import {UserModalService} from "../../admin";
-import {BetTeamMembersComponent} from "../../bet-team-members/bet-team-members.component";
+import {RankingComponent} from './ranking.component';
+import {RankingResolvePagingParams, rankingRoute} from './ranking.route';
+import {UserModalService} from '../../admin';
+import {BetTeamMembersComponent} from '../../bet-team-members/bet-team-members.component';
 
 const ENTITY_STATES = [
     ...rankingRoute

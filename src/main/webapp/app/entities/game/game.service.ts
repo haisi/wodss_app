@@ -76,7 +76,7 @@ export class GameService {
 
         try {
             copy.matchTime = this.dateUtils.toDate(game.matchTime);
-        } catch(e){
+        } catch (e) {
             copy.matchTime = game.matchTime;
         }
         return copy;

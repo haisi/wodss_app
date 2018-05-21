@@ -44,6 +44,9 @@ public class PointUpdateService {
         List<Bet> bets = betRepository.findAllByUser(user);
         int points = 0;
         for(Bet b: bets){
+            if(b.getGame().getGoalsTeam1() == null || b.getGame().getGoalsTeam2() == null){
+                continue;
+            }
             int team1_bet = b.getGoalsTeam1();
             int team2_bet = b.getGoalsTeam2();
             int team1_result = b.getGame().getGoalsTeam1();

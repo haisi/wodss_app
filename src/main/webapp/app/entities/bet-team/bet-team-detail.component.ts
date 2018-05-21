@@ -6,7 +6,6 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { BetTeam } from './bet-team.model';
 import { BetTeamService } from './bet-team.service';
-import {User} from "../../shared";
 
 @Component({
     selector: 'jhi-bet-team-detail',

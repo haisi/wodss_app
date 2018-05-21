@@ -55,7 +55,7 @@ export class BetDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.bet.user === undefined){
+        if (this.bet.user === undefined) {
             this.bet.user = this.currentAccount;
         }
         if (this.bet.id !== undefined) {

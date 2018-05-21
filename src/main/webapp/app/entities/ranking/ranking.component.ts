@@ -4,11 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
 import { ITEMS_PER_PAGE, Principal, User, UserService } from '../../shared';
-import {Subject} from "rxjs/Subject";
+import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 
-import {BetTeam, BetTeamService} from "../bet-team";
-
+import {BetTeam, BetTeamService} from '../bet-team';
 
 @Component({
     selector: 'ranking',
@@ -44,7 +43,7 @@ export class RankingComponent implements OnInit, OnDestroy {
         private router: Router,
         private eventManager: JhiEventManager
     ) {
-        this.itemsPerPage = 10 //ITEMS_PER_PAGE;
+        this.itemsPerPage = 10; // ITEMS_PER_PAGE;
         this.page = 1;
         this.predicate = 'rank';
         this.reverse = true;
@@ -68,7 +67,7 @@ export class RankingComponent implements OnInit, OnDestroy {
         // this.router.onSameUrlNavigation = 'reload';
     }
 
-    onKeyUp(){
+    onKeyUp() {
         this.subject.next();
     }
 
@@ -100,7 +99,7 @@ export class RankingComponent implements OnInit, OnDestroy {
         this.userService.queryRank({
                 page: this.page - 1,
                 size: this.itemsPerPage,
-                sort: this.sort()},this.searchString).subscribe(
+                sort: this.sort()}, this.searchString).subscribe(
                     (res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers),
                     (res: HttpResponse<any>) => this.onError(res.body)
             );
@@ -114,24 +113,19 @@ export class RankingComponent implements OnInit, OnDestroy {
         );
     }
 
-
-
     trackIdentity(index, item: User) {
         return item.id;
     }
 
     sort() {
-        if (this.predicate === 'id')
-            this.predicate = 'rank'
-        let result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-        /*if (this.predicate !== 'id') {
-            result.push('id');
-        }*/
-        return result;
+        if (this.predicate === 'id') {
+            this.predicate = 'rank';
+        }
+        return [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
     }
 
-    sortTeam(){
-        return ['betTeamName','asc'];
+    sortTeam() {
+        return ['betTeamName', 'asc'];
     }
 
     loadPage(page: number) {
@@ -160,20 +154,12 @@ export class RankingComponent implements OnInit, OnDestroy {
 
     private onSuccessTeam(data, headers) {
         this.linksTeam = this.parseLinks.parse(headers.get('link'));
-        //this.totalItemsTeam = headers.get('X-Total-Count');
-        //this.queryCountTeam = this.totalItemsTeam;
         this.betTeams = data;
     }
 
     private onError(error) {
         this.alertService.error(error.error, error.message, null);
     }
-    /**
-     * Checks whether the logged in user is a member of the passed betTeam
-     *
-     * @param {BetTeam} betTeam
-     * @returns {boolean} true if user is member of the betTeam
-     */
     isMember(betTeam: BetTeam) {
         for (const member of betTeam.members) {
             if (member.id === this.currentAccount.id) {
@@ -182,5 +168,4 @@ export class RankingComponent implements OnInit, OnDestroy {
         }
         return false;
     }
-
 }

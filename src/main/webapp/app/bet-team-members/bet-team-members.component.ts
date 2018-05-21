@@ -1,8 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BetTeam, BetTeamService} from "../entities/bet-team";
-import {HttpResponse} from "@angular/common/http";
-import {User} from "../shared";
-
+import {BetTeam, BetTeamService} from '../entities/bet-team';
+import {HttpResponse} from '@angular/common/http';
+import {User} from '../shared';
 
 @Component({
   selector: 'bet-team-members',
@@ -31,17 +30,17 @@ export class BetTeamMembersComponent implements OnInit {
         this.getTeam();
     }
 
-    getTeam(){
+    getTeam() {
         this.betTeamService.find(this.betTeamId).subscribe(
             (res: HttpResponse<BetTeam>) => this.onSuccess(res.body, res.headers),
-            error1 => console.log(error1),
-        )
+            (error1) => console.log(error1),
+        );
 
     }
 
-    onSuccess(data, headers){
+    onSuccess(data, headers) {
         this.betTeam = data;
-        this.tempMembers = this.betTeam.members.slice(0,3);
+        this.tempMembers = this.betTeam.members.slice(0, 3);
     }
 
     transition() {
@@ -56,8 +55,7 @@ export class BetTeamMembersComponent implements OnInit {
                 // a must be equal to b
                 return 0;
             });
-        }
-        else if (this.ranking === 'points' && !this.sortorder) {
+        } else if (this.ranking === 'points' && !this.sortorder) {
             this.tempMembers = this.tempMembers.sort((a, b) => {
                 if (a.points > b.points) {
                     return -1;
@@ -68,8 +66,7 @@ export class BetTeamMembersComponent implements OnInit {
                 // a must be equal to b
                 return 0;
             });
-        }
-        else if (this.ranking === 'rank' && this.sortorder) {
+        } else if (this.ranking === 'rank' && this.sortorder) {
             this.tempMembers = this.tempMembers.sort((a, b) => {
                 if (a.rank < b.rank) {
                     return -1;
@@ -80,8 +77,7 @@ export class BetTeamMembersComponent implements OnInit {
                 // a must be equal to b
                 return 0;
             });
-        }
-        else if (this.ranking === 'rank' && !this.sortorder) {
+        } else if (this.ranking === 'rank' && !this.sortorder) {
             this.tempMembers = this.tempMembers.sort((a, b) => {
                 if (a.rank > b.rank) {
                     return -1;
@@ -92,8 +88,7 @@ export class BetTeamMembersComponent implements OnInit {
                 // a must be equal to b
                 return 0;
             });
-        }
-        else if (this.ranking === 'login' && this.sortorder) {
+        } else if (this.ranking === 'login' && this.sortorder) {
             this.tempMembers = this.tempMembers.sort((a, b) => {
                 if (a.login < b.login) {
                     return -1;
@@ -104,8 +99,7 @@ export class BetTeamMembersComponent implements OnInit {
                 // a must be equal to b
                 return 0;
             });
-        }
-        else {
+        } else {
             this.tempMembers = this.tempMembers.sort((a, b) => {
                 if (a.login > b.login) {
                     return -1;
@@ -119,9 +113,9 @@ export class BetTeamMembersComponent implements OnInit {
         }
     }
 
-    loadPage(page){
+    loadPage(page) {
         console.log(page);
         this.page = page;
-        this.tempMembers = this.betTeam.members.slice((this.page-1)*3, (this.page-1)*3+3);
+        this.tempMembers = this.betTeam.members.slice((this.page - 1) * 3, (this.page - 1) * 3 + 3);
     }
 }

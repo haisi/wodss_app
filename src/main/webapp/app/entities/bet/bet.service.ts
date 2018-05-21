@@ -5,7 +5,7 @@ import { SERVER_API_URL } from '../../app.constants';
 
 import { Bet } from './bet.model';
 import { createRequestOption } from '../../shared';
-import {Betgame} from "./betgame.model";
+import {Betgame} from './betgame.model';
 
 export type EntityResponseType = HttpResponse<Bet>;
 
@@ -78,27 +78,16 @@ export class BetService {
         return res.clone({body});
     }
 
-
-    /**
-     * Convert a returned JSON object to Bet.
-     */
     private convertItemFromServer(bet: Bet): Bet {
         const copy: Bet = Object.assign({}, bet);
         return copy;
     }
 
-    /**
-     * Convert a returned JSON object to Bet.
-     */
     private convertBetgameItemFromServer(bet: Betgame): Betgame {
         const copy: Betgame = Object.assign({}, bet);
         return copy;
     }
 
-
-    /**
-     * Convert a Bet to a JSON which can be sent to the server.
-     */
     private convert(bet: Bet): Bet {
         const copy: Bet = Object.assign({}, bet);
         return copy;
