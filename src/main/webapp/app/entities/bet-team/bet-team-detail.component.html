@@ -1,15 +1,10 @@
 
 <div *ngIf="betTeam">
-    <h2><span jhiTranslate="betChampionApp.betTeam.detail.title">Bet Team</span> {{betTeam.id}}</h2>
+    <h2><span jhiTranslate="betChampionApp.betTeam.detail.title">Bet Team</span> {{betTeam.betTeamName}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="betChampionApp.betTeam.betTeamName">Bet Team Name</span></dt>
-        <dd>
-            <span>{{betTeam.betTeamName}}</span>
-        </dd>
         <input type="text" class="form-control" name="searchString" placeholder="Type to search..." [(ngModel)]="searchString">
-        <dt><span jhiTranslate="userManagement.ranking">Rangliste</span></dt>
 
         <div class="table-responsive">
         <!--<div class="table-responsive" *ngIf="users">-->
@@ -43,7 +38,8 @@
             [routerLink]="['/', { outlets: { popup: 'bet-team/'+ betTeam.id + '/edit'} }]"
             replaceUrl="true"
             queryParamsHandling="merge"
-            class="btn btn-primary">
+            class="btn btn-primary"
+            *jhiHasAnyAuthority="'ROLE_ADMIN'">
         <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
     </button>
 </div>

@@ -2,6 +2,7 @@ package ch.fhnw.wodss.betchampion.web.rest;
 
 import ch.fhnw.wodss.betchampion.domain.User;
 import ch.fhnw.wodss.betchampion.repository.UserRepository;
+import ch.fhnw.wodss.betchampion.security.AuthoritiesConstants;
 import ch.fhnw.wodss.betchampion.security.SecurityUtils;
 import ch.fhnw.wodss.betchampion.service.dto.BetTeamRankingDto;
 import com.codahale.metrics.annotation.Timed;
@@ -18,8 +19,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.relation.Role;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -81,6 +84,7 @@ public class BetTeamResource {
      */
     @PutMapping("/bet-teams")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<BetTeam> updateBetTeam(@Valid @RequestBody BetTeam betTeam) throws URISyntaxException {
         log.debug("REST request to update BetTeam : {}", betTeam);
         if (betTeam.getId() == null) {

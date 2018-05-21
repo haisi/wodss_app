@@ -16,15 +16,13 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="betTeamName"><span jhiTranslate="betChampionApp.betTeam.betTeamName">Bet Team Name</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let betTeam of betTeams ;trackBy: trackId">
-                <td><a [routerLink]="['../bet-team', betTeam.id ]">{{betTeam.id}}</a></td>
-                <td>{{betTeam.betTeamName}}</td>
+                <td><a [routerLink]="['../bet-team', betTeam.id ]">{{betTeam.betTeamName}}</a></td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

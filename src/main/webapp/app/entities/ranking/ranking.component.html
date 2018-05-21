@@ -34,13 +34,13 @@
 <!-- Team Rankings-->
 <div *ngIf="betTeams">
     <h2>
-        <span jhiTranslate="userManagement.teamranking">Meine Team Ranglisten</span>
+        <span jhiTranslate="userManagement.teamranking">Meine Team Ranglisten: Top 5</span>
     </h2>
     <jhi-alert></jhi-alert>
 
     <div *ngFor="let betTeamX of betTeams">
         <div *ngIf="isMember(betTeamX)">
-            <h3>Team: {{betTeamX.betTeamName}}</h3>
+            <h3>Team: <a [routerLink]="['../bet-team', betTeamX.id ]">{{betTeamX.betTeamName}}</a></h3>
             <bet-team-members [betTeamId]="betTeamX.id" ></bet-team-members>
         </div>
     </div>
