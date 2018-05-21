@@ -183,6 +183,10 @@
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@ngx-translate/http-loader/-/http-loader-2.0.1.tgz#aa67788e64bfa8652691a77b022b3b4031209113"
 
+"@qontu/ngx-inline-editor@^0.2.0-alpha.12":
+  version "0.2.0-alpha.12"
+  resolved "https://registry.yarnpkg.com/@qontu/ngx-inline-editor/-/ngx-inline-editor-0.2.0-alpha.12.tgz#4e9fddd2b6afd92d010a5f3420f7c24584658a84"
+
 "@schematics/angular@~0.1.17":
   version "0.1.17"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.1.17.tgz#084a7cbe2de6f94a856bd08d95c9d35ef8905e2b"
