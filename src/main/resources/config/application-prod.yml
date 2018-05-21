@@ -46,10 +46,16 @@ spring:
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: false
     mail:
-        host: localhost
-        port: 25
-        username:
-        password:
+        host: smtp.gmail.com
+        port: 587
+        username: wodssfs18@gmail.com  #Replace this field with your Gmail username.
+        password: ${mail-password} # will get PW from cloud foundry env-vars
+        protocol: smtp
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
     thymeleaf:
         cache: true
 
@@ -100,13 +106,13 @@ jhipster:
     security:
         authentication:
             jwt:
-                secret: 827f665307aed0605221d1ab2c50f871020b5122
+                secret:  ${jwt-secret}
                 # Token is valid 24 hours
                 token-validity-in-seconds: 86400
                 token-validity-in-seconds-for-remember-me: 2592000
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: BetChampion@localhost
-        base-url: http://my-server-url-to-change # Modify according to your server's URL
+        from: BetChampion@bet-champion.cfapps.io
+        base-url: https://bet-champion.cfapps.io/ # Modify according to your server's URL
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         graphite:
