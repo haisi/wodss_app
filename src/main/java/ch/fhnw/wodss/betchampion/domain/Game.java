@@ -30,12 +30,12 @@ public class Game implements Serializable {
 
     @Min(value = 0)
     @Max(value = 99)
-    @Column(name = "goals_team_1", nullable = false)
+    @Column(name = "goals_team_1", nullable = true)
     private Integer goalsTeam1;
 
     @Min(value = 0)
     @Max(value = 99)
-    @Column(name = "goals_team_2", nullable = false)
+    @Column(name = "goals_team_2", nullable = true)
     private Integer goalsTeam2;
 
     @ManyToOne
@@ -63,6 +63,9 @@ public class Game implements Serializable {
     @JsonSerialize
     @JsonDeserialize
     private Integer draw;
+
+    @Column(name = "info", nullable = true)
+    private String info;
 
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -140,6 +143,15 @@ public class Game implements Serializable {
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -167,6 +179,7 @@ public class Game implements Serializable {
             ", matchTime='" + getMatchTime() + "'" +
             ", goalsTeam1=" + getGoalsTeam1() +
             ", goalsTeam2=" + getGoalsTeam2() +
+            ", info=" + getInfo() +
             "}";
     }
 

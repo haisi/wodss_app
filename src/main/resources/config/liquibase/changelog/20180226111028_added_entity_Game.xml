@@ -42,6 +42,9 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="info" type="varchar(80)">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="game" columnName="match_time" columnDataType="datetime"/>

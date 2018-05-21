@@ -16,7 +16,7 @@ import {
     Principal,
     HasAnyAuthorityDirective,
 } from './';
-import {FilterPipe} from "../pipes";
+import {FilterPipe} from '../pipes';
 
 @NgModule({
     imports: [

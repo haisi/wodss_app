@@ -83,7 +83,8 @@
             }
         },
         "field": {
-            "id" : "ID"
+            "id" : "ID",
+            "info" : "Match"
         },
         "ribbon": {
             "dev":"Development"
