@@ -431,7 +431,7 @@ public class AccountResourceIntTest {
         User user = new User();
         user.setLogin("activate-account");
         user.setEmail("activate-account@example.com");
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPassword(RandomStringUtils.random(96));
         user.setActivated(false);
         user.setActivationKey(activationKey);
 
@@ -458,7 +458,7 @@ public class AccountResourceIntTest {
         User user = new User();
         user.setLogin("save-account");
         user.setEmail("save-account@example.com");
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPassword(RandomStringUtils.random(96));
         user.setActivated(true);
 
         userRepository.saveAndFlush(user);
@@ -497,7 +497,7 @@ public class AccountResourceIntTest {
         User user = new User();
         user.setLogin("save-invalid-email");
         user.setEmail("save-invalid-email@example.com");
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPassword(RandomStringUtils.random(96));
         user.setActivated(true);
 
         userRepository.saveAndFlush(user);
@@ -528,7 +528,7 @@ public class AccountResourceIntTest {
         User user = new User();
         user.setLogin("save-existing-email");
         user.setEmail("save-existing-email@example.com");
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPassword(RandomStringUtils.random(96));
         user.setActivated(true);
 
         userRepository.saveAndFlush(user);
@@ -536,7 +536,7 @@ public class AccountResourceIntTest {
         User anotherUser = new User();
         anotherUser.setLogin("save-existing-email2");
         anotherUser.setEmail("save-existing-email2@example.com");
-        anotherUser.setPassword(RandomStringUtils.random(60));
+        anotherUser.setPassword(RandomStringUtils.random(96));
         anotherUser.setActivated(true);
 
         userRepository.saveAndFlush(anotherUser);
@@ -568,7 +568,7 @@ public class AccountResourceIntTest {
         User user = new User();
         user.setLogin("save-existing-email-and-login");
         user.setEmail("save-existing-email-and-login@example.com");
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPassword(RandomStringUtils.random(96));
         user.setActivated(true);
 
         userRepository.saveAndFlush(user);
@@ -598,7 +598,7 @@ public class AccountResourceIntTest {
     @WithMockUser("change-password")
     public void testChangePassword() throws Exception {
         User user = new User();
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPassword(RandomStringUtils.random(96));
         user.setLogin("change-password");
         user.setEmail("change-password@example.com");
         userRepository.saveAndFlush(user);
@@ -615,7 +615,7 @@ public class AccountResourceIntTest {
     @WithMockUser("change-password-too-small")
     public void testChangePasswordTooSmall() throws Exception {
         User user = new User();
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPassword(RandomStringUtils.random(96));
         user.setLogin("change-password-too-small");
         user.setEmail("change-password-too-small@example.com");
         userRepository.saveAndFlush(user);
@@ -632,7 +632,7 @@ public class AccountResourceIntTest {
     @WithMockUser("change-password-too-long")
     public void testChangePasswordTooLong() throws Exception {
         User user = new User();
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPassword(RandomStringUtils.random(96));
         user.setLogin("change-password-too-long");
         user.setEmail("change-password-too-long@example.com");
         userRepository.saveAndFlush(user);
@@ -649,7 +649,7 @@ public class AccountResourceIntTest {
     @WithMockUser("change-password-empty")
     public void testChangePasswordEmpty() throws Exception {
         User user = new User();
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPassword(RandomStringUtils.random(96));
         user.setLogin("change-password-empty");
         user.setEmail("change-password-empty@example.com");
         userRepository.saveAndFlush(user);
@@ -665,7 +665,7 @@ public class AccountResourceIntTest {
     @Transactional
     public void testRequestPasswordReset() throws Exception {
         User user = new User();
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPassword(RandomStringUtils.random(96));
         user.setActivated(true);
         user.setLogin("password-reset");
         user.setEmail("password-reset@example.com");
@@ -680,7 +680,7 @@ public class AccountResourceIntTest {
     @Transactional
     public void testRequestPasswordResetUpperCaseEmail() throws Exception {
         User user = new User();
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPassword(RandomStringUtils.random(96));
         user.setActivated(true);
         user.setLogin("password-reset");
         user.setEmail("password-reset@example.com");
@@ -703,7 +703,7 @@ public class AccountResourceIntTest {
     @Transactional
     public void testFinishPasswordReset() throws Exception {
         User user = new User();
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPassword(RandomStringUtils.random(96));
         user.setLogin("finish-password-reset");
         user.setEmail("finish-password-reset@example.com");
         user.setResetDate(Instant.now().plusSeconds(60));
@@ -728,7 +728,7 @@ public class AccountResourceIntTest {
     @Transactional
     public void testFinishPasswordResetTooSmall() throws Exception {
         User user = new User();
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPassword(RandomStringUtils.random(96));
         user.setLogin("finish-password-reset-too-small");
         user.setEmail("finish-password-reset-too-small@example.com");
         user.setResetDate(Instant.now().plusSeconds(60));

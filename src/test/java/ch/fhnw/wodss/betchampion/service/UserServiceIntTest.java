@@ -47,7 +47,7 @@ public class UserServiceIntTest {
     public void init() {
         user = new User();
         user.setLogin("johndoe");
-        user.setPassword(RandomStringUtils.random(60));
+        user.setPassword(RandomStringUtils.random(96));
         user.setActivated(true);
         user.setEmail("johndoe@localhost");
         user.setFirstName("john");
