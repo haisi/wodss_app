@@ -1,5 +1,5 @@
 id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;created_by;last_modified_by
-1;system;$argon2i$v=19$m=65536,t=2,p=1$fENmNk/58AF2X/OPZveXLA$dLQGRzVO/rQ6PfqDkDoEdSY5WZyhtkS5JgfA2ii6J04;System;System;system@localhost;;true;de;system;system
-2;anonymoususer;$argon2i$v=19$m=65536,t=2,p=1$gOIh/dJpDhulK8WSaY/4TQ$Pcj0FTdCPxtQ4wpBzJzcJO9HHDyANicrV+U1Z2QtlyM;Anonymous;User;anonymous@localhost;;true;de;system;system
-3;admin;$argon2i$v=19$m=65536,t=2,p=1$kFHqVvV1zxqgyobxArShUA$Kt7zcQW4Y4a66KEwPrk+yNMFUjMhszg+waBk9YY5Kds;Administrator;Administrator;admin@localhost;;true;de;system;system
-4;user;$argon2i$v=19$m=65536,t=2,p=1$6QCQBb4QkS+igNvj5HpzZQ$FXMzeWYpTbZCcfaCAmI2C0qFnujRYFUQyYtwf52VIsU;User;User;user@localhost;;true;de;system;system
+1;system;$argon2i$v=19$m=128000,t=40,p=4$/2FnxJ6eF9JJy4QT6Sdd/g$210qtbeCJUv2Rxsd+87rYwAtZgMd2UegGhz9TzudiZQ;System;System;system@localhost;;true;de;system;system
+2;anonymoususer;$argon2i$v=19$m=128000,t=40,p=4$BQsu9tM+8V+UQAXO2dWsug$0PnBEok0HfqlrJ2U7s2rUX6CFx17YDqvvnf9axeOYco;Anonymous;User;anonymous@localhost;;true;de;system;system
+3;admin;$argon2i$v=19$m=128000,t=40,p=4$+ATRXZzx6Clj3MpgIrXZAw$m6cYYA01KQmDDVMhs/UqSWQOWXJbmRKOs02xZitrtnI;Administrator;Administrator;admin@localhost;;true;de;system;system
+4;user;$argon2i$v=19$m=128000,t=40,p=4$dIuHoazd4Qp1osq+NwLm0g$nP2NNvmWRnR9A6jiGd46yUJOmHasPHJgSmuYQUjSqwY;User;User;user@localhost;;true;de;system;system
