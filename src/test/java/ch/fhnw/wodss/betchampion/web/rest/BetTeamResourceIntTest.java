@@ -4,6 +4,7 @@ import ch.fhnw.wodss.betchampion.BetChampionApp;
 
 import ch.fhnw.wodss.betchampion.domain.BetTeam;
 import ch.fhnw.wodss.betchampion.repository.BetTeamRepository;
+import ch.fhnw.wodss.betchampion.repository.UserRepository;
 import ch.fhnw.wodss.betchampion.service.BetTeamService;
 import ch.fhnw.wodss.betchampion.web.rest.errors.ExceptionTranslator;
 
@@ -49,6 +50,9 @@ public class BetTeamResourceIntTest {
     private BetTeamService betTeamService;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -67,7 +71,7 @@ public class BetTeamResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final BetTeamResource betTeamResource = new BetTeamResource(betTeamService);
+        final BetTeamResource betTeamResource = new BetTeamResource(betTeamService, userRepository);
         this.restBetTeamMockMvc = MockMvcBuilders.standaloneSetup(betTeamResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
