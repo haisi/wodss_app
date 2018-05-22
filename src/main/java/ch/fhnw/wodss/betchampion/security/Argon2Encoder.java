@@ -13,7 +13,7 @@ public class Argon2Encoder implements PasswordEncoder {
 
     @Override
     public String encode(CharSequence rawPassword) {
-        return argon2.hash(2, 65536, 1, String.valueOf(rawPassword));
+        return argon2.hash(40, 128000, 4, String.valueOf(rawPassword));
     }
 
     @Override
