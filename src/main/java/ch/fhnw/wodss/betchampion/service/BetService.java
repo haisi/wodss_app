@@ -80,6 +80,13 @@ public class BetService {
         return jdbcTemplate.query(BET_DTO_SQL, new Object[] {user.getId()}, new BetDtoMapper());
     }
 
+    /**
+     * <p>If the user has already placed a bet on a game --> Update the bet entity</p>
+     * <p>Else --> create a new bet</p>
+     *
+     * @param dto with the changes
+     * @return newly created or updated bet entity
+     */
     public Bet upsertBet(UpsertBetDto dto) {
         Optional<User> currentUser = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
         if (!currentUser.isPresent()) {
