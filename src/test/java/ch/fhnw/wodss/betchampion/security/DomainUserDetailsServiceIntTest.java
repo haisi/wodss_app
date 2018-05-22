@@ -50,7 +50,7 @@ public class DomainUserDetailsServiceIntTest {
     public void init() {
         userOne = new User();
         userOne.setLogin(USER_ONE_LOGIN);
-        userOne.setPassword(RandomStringUtils.random(60));
+        userOne.setPassword(RandomStringUtils.random(96));
         userOne.setActivated(true);
         userOne.setEmail(USER_ONE_EMAIL);
         userOne.setFirstName("userOne");
@@ -60,7 +60,7 @@ public class DomainUserDetailsServiceIntTest {
 
         userTwo = new User();
         userTwo.setLogin(USER_TWO_LOGIN);
-        userTwo.setPassword(RandomStringUtils.random(60));
+        userTwo.setPassword(RandomStringUtils.random(96));
         userTwo.setActivated(true);
         userTwo.setEmail(USER_TWO_EMAIL);
         userTwo.setFirstName("userTwo");
@@ -70,7 +70,7 @@ public class DomainUserDetailsServiceIntTest {
 
         userThree = new User();
         userThree.setLogin(USER_THREE_LOGIN);
-        userThree.setPassword(RandomStringUtils.random(60));
+        userThree.setPassword(RandomStringUtils.random(96));
         userThree.setActivated(false);
         userThree.setEmail(USER_THREE_EMAIL);
         userThree.setFirstName("userThree");
