@@ -13,5 +13,6 @@
     <include file="config/liquibase/changelog/20180226111027_added_entity_constraints_Bet.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180226111028_added_entity_constraints_Game.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180226111029_added_entity_constraints_BetTeam.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180523152230_added_teams_and_games.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
