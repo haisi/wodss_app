@@ -25,11 +25,6 @@ public class Team implements Serializable {
     @Column(name = "team_name", length = 80, nullable = false)
     private String teamName;
 
-    @NotNull
-    @Size(min = 1, max = 1)
-    @Column(name = "preliminary_group", length = 1, nullable = false)
-    private String group;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -52,14 +47,6 @@ public class Team implements Serializable {
         this.teamName = teamName;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
-
-    public String getGroup() {
-        return group;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -84,8 +71,8 @@ public class Team implements Serializable {
     @Override
     public String toString() {
         return "Team{" +
-            "id=" + getId() +
-            ", teamName='" + getTeamName() + "' , group=" + getGroup() +
-            "}";
+            "id=" + id +
+            ", teamName='" + teamName + '\'' +
+            '}';
     }
 }
