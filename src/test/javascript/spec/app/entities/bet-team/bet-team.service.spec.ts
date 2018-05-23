@@ -35,7 +35,7 @@ describe('Service Tests', () => {
                 const req  = httpMock.expectOne({ method: 'GET' });
 
                 const resourceUrl = SERVER_API_URL + 'api/bet-teams';
-                expect(req.request.url).toEqual(resourceUrl + '/' + 123);
+                expect(req.request.url).toEqual(resourceUrl + '/' + 123 + '/ranking');
             });
             it('should return BetTeam', () => {
 
