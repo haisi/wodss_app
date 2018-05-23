@@ -27,7 +27,7 @@ public class Team implements Serializable {
 
     @NotNull
     @Size(min = 1, max = 1)
-    @Column(name = "group", length = 1, nullable = false)
+    @Column(name = "preliminary_group", length = 1, nullable = false)
     private String group;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

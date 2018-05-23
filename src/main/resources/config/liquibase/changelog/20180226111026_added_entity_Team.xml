@@ -25,7 +25,7 @@
             <column name="team_name" type="varchar(80)">
                 <constraints nullable="false" />
             </column>
-            <column name="group" type="varchar(1)">
+            <column name="preliminary_group" type="varchar(1)">
                 <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
