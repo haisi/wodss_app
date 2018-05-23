@@ -113,7 +113,9 @@ public class GameResource {
     public ResponseEntity<Game> getGame(@PathVariable Long id) {
         log.debug("REST request to get Game : {}", id);
         Game game = gameService.findOne(id);
-        game.setStats(betService.getStats(game));
+        if (game != null) {
+            game.setStats(betService.getStats(game));
+        }
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(game));
     }
 
