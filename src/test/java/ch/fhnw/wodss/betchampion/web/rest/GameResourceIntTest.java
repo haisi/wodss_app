@@ -169,24 +169,6 @@ public class GameResourceIntTest {
 
     @Test
     @Transactional
-    public void checkGoalsTeam1IsRequired() throws Exception {
-        int databaseSizeBeforeTest = gameRepository.findAll().size();
-        // set the field null
-        game.setGoalsTeam1(null);
-
-        // Create the Game, which fails.
-
-        restGameMockMvc.perform(post("/api/games")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(game)))
-            .andExpect(status().isBadRequest());
-
-        List<Game> gameList = gameRepository.findAll();
-        assertThat(gameList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkGoalsTeam2IsRequired() throws Exception {
         int databaseSizeBeforeTest = gameRepository.findAll().size();
         // set the field null
