@@ -42,10 +42,11 @@ public class UserRankingDTO implements Comparable<UserRankingDTO> {
      *     1 : 9 : Hans1
      *     3 : 6 : Urs
      *     3 : 6 : Urs2
-     *     5 : 2 : Skrrt
+     *     5 : 2 : daniel
      *     6 : 0 : Looser
      * </pre>
      *
+     * Adds the rank to a list of users.
      *
      * @param rankings
      * @return

@@ -68,6 +68,11 @@ public class BetService {
 
     private final String GAME_CLOSED_SQL = "SELECT g.match_time < NOW() as closed FROM game as g WHERE g.id = ?;";
 
+    /**
+     * Reads all Games and exitsting bets of the currently logged in user
+     *
+     * @return Outer-Joined list of Games and Bets for the User
+     */
     public List<BetDto> getAllBetsAndGamesOfUser() {
 
         Optional<User> currentUser = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
@@ -120,8 +125,18 @@ public class BetService {
         return betRepository.save(bet);
     }
 
+    /**
+     * Mapper for the DTO Bet.
+     */
     public class BetDtoMapper implements RowMapper<BetDto> {
-
+        /**
+         * Transforms a result set record to a Bet DTO
+         *
+         * @param rs Result set from the query
+         * @param rowNum Index of record to transform
+         * @return The mappend DTO
+         * @throws SQLException Unexpected SQL-Exception
+         */
         @Override
         public BetDto mapRow(ResultSet rs, int rowNum) throws SQLException {
             BetDto betDto = new BetDto();
@@ -203,16 +218,31 @@ public class BetService {
         betRepository.delete(id);
     }
 
+    /**
+     * Returns the Stats for a given GameId.
+     * @param gameId Id of the Game
+     * @return Stats
+     */
     public Stats getStats(Long gameId){
         List<Bet> bets = betRepository.findAllByGameId(gameId);
         return calculateStats(bets);
     }
 
+    /**
+     * Returns the Stats for a given Game
+     * @param game Game
+     * @return Stats
+     */
     public Stats getStats(Game game){
         List<Bet> bets = betRepository.findAllByGame(game);
         return calculateStats(bets);
     }
 
+    /**
+     * Calculates the stats for a List of Bets
+     * @param bets List of Bets
+     * @return Stats
+     */
     private Stats calculateStats(List<Bet> bets) {
         int t1 = 0, t2 = 0, draw = 0;
         for(Bet b: bets){
