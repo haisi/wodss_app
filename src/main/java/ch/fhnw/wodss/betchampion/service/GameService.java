@@ -21,8 +21,11 @@ public class GameService {
 
     private final GameRepository gameRepository;
 
-    public GameService(GameRepository gameRepository) {
+    private final PointUpdateService pointUpdateService;
+
+    public GameService(GameRepository gameRepository, PointUpdateService pointUpdateService) {
         this.gameRepository = gameRepository;
+        this.pointUpdateService = pointUpdateService;
     }
 
     /**
@@ -33,6 +36,9 @@ public class GameService {
      */
     public Game save(Game game) {
         log.debug("Request to save Game : {}", game);
+        if(game.getGoalsTeam2() != null && game.getGoalsTeam1() != null){
+            pointUpdateService.updatePoints();
+        }
         return gameRepository.save(game);
     }
 
