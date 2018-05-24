@@ -18,5 +18,11 @@
                   separator=","
                   tableName="game">
         </loadData>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/bets.csv"
+                  separator=","
+                  tableName="bet">
+        </loadData>
     </changeSet>
 </databaseChangeLog>
