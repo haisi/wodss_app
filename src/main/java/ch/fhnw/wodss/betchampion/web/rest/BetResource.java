@@ -49,48 +49,6 @@ public class BetResource {
         return betService.upsertBet(dto);
     }
 
-    /**
-     * POST  /bets : Create a new bet.
-     *
-     * @param bet the bet to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new bet, or with status 400 (Bad Request) if the bet has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PostMapping("/bets")
-    @Timed
-    public ResponseEntity<Bet> createBet(@Valid @RequestBody Bet bet) throws URISyntaxException {
-        log.debug("REST request to save Bet : {}", bet);
-        if (bet.getId() != null) {
-            throw new BadRequestAlertException("A new bet cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        Bet result = betService.save(bet);
-        return ResponseEntity.created(new URI("/api/bets/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
-
-    /**
-     * PUT  /bets : Updates an existing bet.
-     *
-     * @param bet the bet to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated bet,
-     * or with status 400 (Bad Request) if the bet is not valid,
-     * or with status 500 (Internal Server Error) if the bet couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PutMapping("/bets")
-    @Timed
-    public ResponseEntity<Bet> updateBet(@Valid @RequestBody Bet bet) throws URISyntaxException {
-        log.debug("REST request to update Bet : {}", bet);
-        if (bet.getId() == null) {
-            return createBet(bet);
-        }
-        Bet result = betService.save(bet);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, bet.getId().toString()))
-            .body(result);
-    }
-
     @GetMapping("/mybets")
     @Timed
     public ResponseEntity<List<BetDto>> getAllBetsAndGamesOfUser() {

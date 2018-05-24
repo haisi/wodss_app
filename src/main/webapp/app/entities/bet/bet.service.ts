@@ -23,18 +23,6 @@ export class BetService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    create(bet: Bet): Observable<EntityResponseType> {
-        const copy = this.convert(bet);
-        return this.http.post<Bet>(this.resourceUrl, copy, { observe: 'response' })
-            .map((res: EntityResponseType) => this.convertResponse(res));
-    }
-
-    update(bet: Bet): Observable<EntityResponseType> {
-        const copy = this.convert(bet);
-        return this.http.put<Bet>(this.resourceUrl, copy, { observe: 'response' })
-            .map((res: EntityResponseType) => this.convertResponse(res));
-    }
-
     find(id: number): Observable<EntityResponseType> {
         return this.http.get<Bet>(`${this.resourceUrl}/${id}`, { observe: 'response'})
             .map((res: EntityResponseType) => this.convertResponse(res));
@@ -49,10 +37,6 @@ export class BetService {
         const options = createRequestOption(req);
         return this.http.get<Bet[]>(this.resourceUrl, { params: options, observe: 'response' })
             .map((res: HttpResponse<Bet[]>) => this.convertArrayResponse(res));
-    }
-
-    delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
