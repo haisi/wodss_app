@@ -1,6 +1,5 @@
 package ch.fhnw.wodss.betchampion.service;
 
-import ch.fhnw.wodss.betchampion.config.CacheConfiguration;
 import ch.fhnw.wodss.betchampion.domain.Authority;
 import ch.fhnw.wodss.betchampion.domain.User;
 import ch.fhnw.wodss.betchampion.repository.AuthorityRepository;
@@ -43,11 +42,14 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    private final PointUpdateService pointUpdateService;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager, PointUpdateService pointUpdateService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.pointUpdateService = pointUpdateService;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -115,6 +117,7 @@ public class UserService {
         cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).evict(newUser.getLogin());
         cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).evict(newUser.getEmail());
         log.debug("Created Information for User: {}", newUser);
+        pointUpdateService.updatePoints();
         return newUser;
     }
 
