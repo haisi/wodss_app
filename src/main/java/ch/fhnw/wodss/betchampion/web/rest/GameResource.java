@@ -1,5 +1,6 @@
 package ch.fhnw.wodss.betchampion.web.rest;
 
+import ch.fhnw.wodss.betchampion.security.AuthoritiesConstants;
 import ch.fhnw.wodss.betchampion.service.BetService;
 import com.codahale.metrics.annotation.Timed;
 import ch.fhnw.wodss.betchampion.domain.Game;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -52,6 +54,7 @@ public class GameResource {
      */
     @PostMapping("/games")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Game> createGame(@Valid @RequestBody Game game) throws URISyntaxException {
         log.debug("REST request to save Game : {}", game);
         if (game.getId() != null) {
@@ -74,6 +77,7 @@ public class GameResource {
      */
     @PutMapping("/games")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Game> updateGame(@Valid @RequestBody Game game) throws URISyntaxException {
         log.debug("REST request to update Game : {}", game);
         if (game.getId() == null) {
@@ -127,6 +131,7 @@ public class GameResource {
      */
     @DeleteMapping("/games/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteGame(@PathVariable Long id) {
         log.debug("REST request to delete Game : {}", id);
         gameService.delete(id);

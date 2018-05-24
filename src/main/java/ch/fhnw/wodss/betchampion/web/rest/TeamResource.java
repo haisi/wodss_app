@@ -1,5 +1,6 @@
 package ch.fhnw.wodss.betchampion.web.rest;
 
+import ch.fhnw.wodss.betchampion.security.AuthoritiesConstants;
 import com.codahale.metrics.annotation.Timed;
 import ch.fhnw.wodss.betchampion.domain.Team;
 import ch.fhnw.wodss.betchampion.service.TeamService;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -49,6 +51,7 @@ public class TeamResource {
      */
     @PostMapping("/teams")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Team> createTeam(@Valid @RequestBody Team team) throws URISyntaxException {
         log.debug("REST request to save Team : {}", team);
         if (team.getId() != null) {
@@ -71,6 +74,7 @@ public class TeamResource {
      */
     @PutMapping("/teams")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Team> updateTeam(@Valid @RequestBody Team team) throws URISyntaxException {
         log.debug("REST request to update Team : {}", team);
         if (team.getId() == null) {
@@ -119,6 +123,7 @@ public class TeamResource {
      */
     @DeleteMapping("/teams/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteTeam(@PathVariable Long id) {
         log.debug("REST request to delete Team : {}", id);
         teamService.delete(id);
