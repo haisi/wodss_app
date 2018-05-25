@@ -1,4 +1,4 @@
 ---
 applications:
 - name: bet-champion
-  path: build/libs/bet-champion-0.0.1-SNAPSHOT.war
+  path: build/libs/bet-champion-1.0.0.war
