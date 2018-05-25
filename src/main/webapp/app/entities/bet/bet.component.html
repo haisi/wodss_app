@@ -13,14 +13,14 @@
                 <th><span jhiTranslate="global.field.info">Match</span></th>
                 <th><span jhiTranslate="betChampionApp.game.matchTime">Match Time</span></th>
 
-                <th><span>Result</span></th>
+                <th><span jhiTranslate="betChampionApp.game.result">Resultat</span></th>
 
                 <th><span jhiTranslate="betChampionApp.game.team1">Team 1</span></th>
-                <th><span jhiTranslate="betChampionApp.game.goalsTeam1">Goals Team 1</span></th>
+                <th style="width: 180px !important;"><span jhiTranslate="betChampionApp.game.goalsTeam1">Goals Team 1</span></th>
 
                 <th width="30%"><span>Stats</span></th>
 
-                <th><span jhiTranslate="betChampionApp.game.goalsTeam2">Goals Team 2</span></th>
+                <th style="width: 180px !important;"><span jhiTranslate="betChampionApp.game.goalsTeam2">Goals Team 2</span></th>
                 <th><span jhiTranslate="betChampionApp.game.team2">Team 2</span></th>
             </tr>
             </thead>
@@ -31,8 +31,8 @@
                 <td><b>{{bet.goalsTeam1 === null ? "-" : bet.goalsTeam1}} : {{bet.goalsTeam2 === null ? "-" : bet.goalsTeam2}}</b></td>
                 <td>{{bet.team1Name}}</td>
 
-                <td *ngIf="!bet.gameClosed; else givenGoal1">
-                    <inline-editor type="number" [(ngModel)]="bet.betGoalTeam1" (onSave)="save(bet)" name="editableText1" size="8"></inline-editor>
+                <td *ngIf="!bet.gameClosed; else givenGoal1" style="width: 180px !important; height: 62px !important;">
+                    <inline-editor empty="--" placeholder="0" type="number" [(ngModel)]="bet.betGoalTeam1" (onSave)="save(bet)" name="editableText1" size="8"></inline-editor>
                 </td>
                 <ng-template #givenGoal1>
                     <td>{{bet.betGoalTeam1 === null ? "-" : bet.betGoalTeam1}}</td>
@@ -46,8 +46,8 @@
                     </div>
                 </td>
 
-                <td *ngIf="!bet.gameClosed; else givenGoal2">
-                    <inline-editor type="number" [(ngModel)]="bet.betGoalTeam2" (onSave)="save(bet)" name="editableText2" size="8"></inline-editor>
+                <td *ngIf="!bet.gameClosed; else givenGoal2" style="width: 180px !important; height: 62px !important;">
+                    <inline-editor empty="--" placeholder="0" type="number" [(ngModel)]="bet.betGoalTeam2" (onSave)="save(bet)" name="editableText2" size="8"></inline-editor>
                 </td>
                 <ng-template #givenGoal2>
                     <td>{{bet.betGoalTeam2 === null ? "-" : bet.betGoalTeam2}}</td>

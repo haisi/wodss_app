@@ -110,9 +110,8 @@ currentAccount: any;
         return result;
     }
 
-    save(game) {
-        this.subscribeToSaveResponse(
-            this.gameService.update(game));
+    save(game){
+        this.gameService.update(game)
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<Game>>) {
@@ -121,7 +120,7 @@ currentAccount: any;
     }
 
     private onSaveSuccess(result: Game) {
-        this.eventManager.broadcast({ name: 'gameListModification', content: 'OK'});
+        //this.eventManager.broadcast({ name: 'gameListModification', content: 'OK'});
         this.isSaving = false;
     }
 

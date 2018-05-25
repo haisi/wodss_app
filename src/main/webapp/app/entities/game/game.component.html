@@ -19,9 +19,9 @@
             <th jhiSortBy="info"><span jhiTranslate="global.field.info">Match</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="matchTime"><span jhiTranslate="betChampionApp.game.matchTime">Match Time</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="team1.teamName"><span jhiTranslate="betChampionApp.game.team1">Team 1</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="goalsTeam1"><span jhiTranslate="betChampionApp.game.goalsTeam1">Goals Team 1</span> <span class="fa fa-sort"></span></th>
+            <th style="width: 180px !important;" jhiSortBy="goalsTeam1"><span jhiTranslate="betChampionApp.game.goalsTeam1">Goals Team 1</span> <span class="fa fa-sort"></span></th>
             <th width="30%"><span>Stats</span></th>
-            <th jhiSortBy="goalsTeam2"><span jhiTranslate="betChampionApp.game.goalsTeam2">Goals Team 2</span> <span class="fa fa-sort"></span></th>
+            <th style="width: 180px !important;" jhiSortBy="goalsTeam2"><span jhiTranslate="betChampionApp.game.goalsTeam2">Goals Team 2</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="team2.teamName"><span jhiTranslate="betChampionApp.game.team2">Team 2</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
@@ -35,8 +35,8 @@
                         <a [routerLink]="['../team', game.team1?.id ]" >{{game.team1?.teamName}}</a>
                     </div>
                 </td>
-                <td style="max-width: 150px">
-                    <inline-editor class="try" type="number" [(ngModel)]="game.goalsTeam1" (onSave)="save(game)" name="editableText1" min=0 max=99 size=1 ></inline-editor>
+                <td style="width: 180px !important; height: 62px !important;">
+                    <inline-editor empty="--" placeholder="0" class="try" type="number" [(ngModel)]="game.goalsTeam1" (onSave)="save(game)" name="editableText1" min=0 max=99 size=1 ></inline-editor>
                 </td>
                 <td>
                     <div class="progress">
@@ -45,8 +45,8 @@
                         <div class="progress-bar bg-info" role="progressbar"  [style.width.%]="game.team2Won" aria-valuemin="0" aria-valuemax="100">{{game.team2Won==0?'':game.team2Won+'%'}}</div>
                     </div>
                 </td>
-                <td>
-                    <inline-editor type="number" [(ngModel)]="game.goalsTeam2" (onSave)="save(game)" name="editableText1" min="0" max="99" size="1"></inline-editor>
+                <td style="width: 180px !important; height: 62px !important;">
+                    <inline-editor empty="--" placeholder="0" type="number" [(ngModel)]="game.goalsTeam2" (onSave)="save(game)" name="editableText1" min="0" max="99" size="1"></inline-editor>
                 </td>
                 <td>
                     <div *ngIf="game.team2">

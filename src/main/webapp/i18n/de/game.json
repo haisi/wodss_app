@@ -3,24 +3,25 @@
     "betChampionApp": {
         "game" : {
             "home": {
-                "title": "Games",
-                "createLabel": "Game erstellen",
-                "createOrEditLabel": "Game erstellen oder bearbeiten"
+                "title": "Spiele",
+                "createLabel": "Spiel erstellen",
+                "createOrEditLabel": "Spiel erstellen oder bearbeiten"
             },
-            "created": "Game erstellt mit ID {{ param }}",
-            "updated": "Game aktualisiert mit ID {{ param }}",
-            "deleted": "Game gelöscht mit ID {{ param }}",
+            "created": "Spiel erstellt mit ID {{ param }}",
+            "updated": "Spiel aktualisiert mit ID {{ param }}",
+            "deleted": "Spiel gelöscht mit ID {{ param }}",
             "delete": {
-                "question": "Soll Game {{ id }} wirklich dauerhaft gelöscht werden?"
+                "question": "Soll Spiel {{ id }} wirklich dauerhaft gelöscht werden?"
             },
             "detail": {
-                "title": "Game"
+                "title": "Spiel"
             },
             "matchTime": "Spielzeit",
             "goalsTeam1": "Goals Team 1",
             "goalsTeam2": "Goals Team 2",
             "team1": "Team 1",
-            "team2": "Team 2"
+            "team2": "Team 2",
+            "result": "Resultat"
         }
     }
 }

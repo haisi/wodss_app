@@ -20,7 +20,8 @@
             "goalsTeam1": "Goals Team 1",
             "goalsTeam2": "Goals Team 2",
             "team1": "Team 1",
-            "team2": "Team 2"
+            "team2": "Team 2",
+            "result": "Result"
         }
     }
 }
