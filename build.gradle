@@ -49,7 +49,7 @@ dependencyManagement {
 defaultTasks 'bootRun'
 
 group = 'ch.fhnw.wodss.betchampion'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 
 description = ''
 
