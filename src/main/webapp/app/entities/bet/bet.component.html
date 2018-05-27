@@ -28,14 +28,14 @@
             <tr *ngFor="let bet of bets;">
                 <td>{{bet.info}}</td>
                 <td>{{bet.matchTime | date:'medium'}}</td>
-                <td><b>{{bet.goalsTeam1 || "-"}} : {{bet.goalsTeam2 || "-"}}</b></td>
+                <td><b>{{bet.goalsTeam1 === null ? "-" : bet.goalsTeam1}} : {{bet.goalsTeam2 === null ? "-" : bet.goalsTeam2}}</b></td>
                 <td>{{bet.team1Name}}</td>
 
                 <td *ngIf="!bet.gameClosed; else givenGoal1">
                     <inline-editor type="number" [(ngModel)]="bet.betGoalTeam1" (onSave)="save(bet)" name="editableText1" size="8"></inline-editor>
                 </td>
                 <ng-template #givenGoal1>
-                    <td>{{bet.betGoalTeam1 || "-"}}</td>
+                    <td>{{bet.betGoalTeam1 === null ? "-" : bet.betGoalTeam1}}</td>
                 </ng-template>
 
                 <td>
@@ -50,7 +50,7 @@
                     <inline-editor type="number" [(ngModel)]="bet.betGoalTeam2" (onSave)="save(bet)" name="editableText2" size="8"></inline-editor>
                 </td>
                 <ng-template #givenGoal2>
-                    <td>{{bet.betGoalTeam2 || "-"}}</td>
+                    <td>{{bet.betGoalTeam2 === null ? "-" : bet.betGoalTeam2}}</td>
                 </ng-template>
 
                 <td>{{bet.team2Name}}</td>
